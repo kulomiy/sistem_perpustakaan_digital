@@ -3,8 +3,8 @@ session_start();
 require '../koneksi.php';
 
 // Cek sesi user
-if(!isset($_SESSION['user_id']) || $_SESSION['role'] != 'member') {
-    header("Location: ../login.php"); 
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'member') {
+    header("Location: ../login.php");
     exit();
 }
 
@@ -27,7 +27,7 @@ if (count($words) >= 2) {
 // Mengambil riwayat peminjaman
 // Ubah kueri $query_activity menjadi:
 $query_activity = "
-    SELECT p.id_pinjam, p.tanggal_pinjam, p.tanggal_kembali, p.status, b.id_buku, b.judul, b.penulis 
+    SELECT p.id_pinjam, p.tanggal_pinjam, p.tanggal_kembali, p.status, b.id_buku, b.judul, b.penulis, b.cover
     FROM peminjaman p
     LEFT JOIN buku b ON p.id_buku = b.id_buku
     WHERE p.id_user = '$user_id'
@@ -37,14 +37,21 @@ $result_activity = @mysqli_query($conn, $query_activity);
 ?>
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <title>Activity History - E-Library Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <style> body { font-family: 'Inter', sans-serif; background-color: #ffffff; } </style>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+        }
+    </style>
 </head>
+
 <body class="flex flex-col min-h-screen">
 
     <nav class="border-b border-gray-200 bg-white sticky top-0 z-50">
@@ -53,7 +60,7 @@ $result_activity = @mysqli_query($conn, $query_activity);
                 <div class="flex items-center gap-2">
                     <span class="text-[#1e3a8a] font-extrabold text-xl tracking-tight">E-Library Portal</span>
                 </div>
-                
+
                 <div class="hidden md:flex space-x-8">
                     <a href="beranda.php" class="border-b-2 border-transparent text-gray-500 hover:text-gray-900 hover:border-gray-300 inline-flex items-center px-1 pt-1 text-sm font-medium transition">Home</a>
                     <a href="daftar_buku.php" class="border-b-2 border-transparent text-gray-500 hover:text-gray-900 hover:border-gray-300 inline-flex items-center px-1 pt-1 text-sm font-medium transition">Daftar Buku</a>
@@ -98,28 +105,43 @@ $result_activity = @mysqli_query($conn, $query_activity);
         </div>
 
         <div class="space-y-4">
-            <?php 
-            if($result_activity && mysqli_num_rows($result_activity) > 0) {
-                while($row = mysqli_fetch_assoc($result_activity)) {
+            <?php
+            if ($result_activity && mysqli_num_rows($result_activity) > 0) {
+                while ($row = mysqli_fetch_assoc($result_activity)) {
                     $judul = htmlspecialchars($row['judul'] ?? "Buku Tanpa Judul");
                     $status = strtolower($row['status'] ?? 'aktif');
-                    
+
                     // Badge Styling Serasi dengan Beranda
-                    if($status == 'selesai' || $status == 'dikembalikan') {
+                    if ($status == 'selesai' || $status == 'dikembalikan') {
                         $badge = '<span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-[10px] font-bold border border-gray-200">FINISHED</span>';
                     } else {
                         $badge = '<span class="bg-blue-100 text-[#1e3a8a] px-3 py-1 rounded-full text-[10px] font-bold border border-blue-200">ACTIVE</span>';
                     }
             ?>
-                <div class="bg-white border border-gray-200 rounded-xl p-5 flex items-center gap-6 shadow-sm hover:shadow-md transition">
-                    <div class="w-16 h-20 bg-gray-100 rounded-lg flex items-center justify-center text-gray-400"><i class="fa-solid fa-book"></i></div>
-                    <div class="flex-1">
-                        <div class="mb-1"><?= $badge ?></div>
-                        <h3 class="text-lg font-bold text-gray-900"><?= $judul ?></h3>
-                        <p class="text-sm text-gray-500">by <?= htmlspecialchars($row['penulis'] ?? '-') ?></p>
+                    <div class="bg-white border border-gray-200 rounded-xl p-5 flex items-center gap-6 shadow-sm hover:shadow-md transition">
+
+                        <div class="w-16 h-20 rounded-lg overflow-hidden border border-gray-200 flex-shrink-0">
+                            <?php if (!empty($row['cover'])): ?>
+                                <img src="../uploads/cover/<?= htmlspecialchars($row['cover']) ?>"
+                                    alt="<?= htmlspecialchars($judul) ?>"
+                                    class="w-full h-full object-cover">
+                            <?php else: ?>
+                                <div class="w-full h-full bg-gray-100 flex items-center justify-center text-gray-400">
+                                    <i class="fa-solid fa-book"></i>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+
+                        <div class="flex-1">
+                            <div class="mb-1"><?= $badge ?></div>
+                            <h3 class="text-lg font-bold text-gray-900"><?= $judul ?></h3>
+                            <p class="text-sm text-gray-500">
+                                by <?= htmlspecialchars($row['penulis'] ?? '-') ?>
+                            </p>
+                        </div>
+
                     </div>
-                </div>
-            <?php } 
+                <?php }
             } else { ?>
                 <div class="text-center py-20 text-gray-500">Tidak ada riwayat peminjaman.</div>
             <?php } ?>
@@ -146,4 +168,5 @@ $result_activity = @mysqli_query($conn, $query_activity);
         });
     </script>
 </body>
+
 </html>
