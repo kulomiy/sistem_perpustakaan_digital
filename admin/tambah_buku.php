@@ -115,7 +115,7 @@ if(isset($_FILES['cover']) && $_FILES['cover']['error'] == 0){
                         <label class="block text-sm font-bold text-gray-700 mb-2">Judul Buku <span class="text-red-500">*</span></label>
                         <input type="text" name="judul" required placeholder="Judul Buku" class="block w-full px-4 py-2.5 border border-gray-300 rounded-md bg-white focus:outline-none focus:border-[#113285] focus:ring-1 focus:ring-[#113285] text-sm">
                     </div>
-                    
+
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-2">Penulis <span class="text-red-500">*</span></label>
                         <input type="text" name="penulis" required placeholder="Nama Penulis" class="block w-full px-4 py-2.5 border border-gray-300 rounded-md bg-white focus:outline-none focus:border-[#113285] focus:ring-1 focus:ring-[#113285] text-sm">
@@ -133,14 +133,14 @@ if(isset($_FILES['cover']) && $_FILES['cover']['error'] == 0){
                     </div>
 
                     <div class="flex gap-4">
-                        <div class="flex-1">
+                        <div class="flex-1/4">
                             <label class="block text-sm font-bold text-gray-700 mb-2">Kategori <span class="text-red-500">*</span></label>
                             <select name="id_kategori" required class="block w-full px-4 py-2.5 border border-gray-300 rounded-md bg-white focus:outline-none focus:border-[#113285] focus:ring-1 focus:ring-[#113285] text-sm">
-                                <option value="" disabled selected>Pilih kategori buku...</option>
+                                <option value="" disabled selected>Pilih kategori buku</option>
                                 <?php
                                 // Memanggil data kategori sesuai kodemu
                                 $q = mysqli_query($conn, "SELECT * FROM kategori");
-                                while($k = mysqli_fetch_assoc($q)){
+                                while ($k = mysqli_fetch_assoc($q)) {
                                 ?>
                                     <option value="<?= $k['id_kategori'] ?>">
                                         <?= htmlspecialchars($k['nama_kategori']) ?>
@@ -148,17 +148,33 @@ if(isset($_FILES['cover']) && $_FILES['cover']['error'] == 0){
                                 <?php } ?>
                             </select>
                         </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">Cover Buku</label>
-                        <input type="file"
-                            name="cover"
-                            accept="image/*"
-                            class="block w-full px-4 py-2.5 border border-gray-300 rounded-md">
-                    </div>
-                    <div class="w-1/3">
-                        <label class="block text-sm font-bold text-gray-700 mb-2">Stock <span class="text-red-500">*</span></label>
-                        <input type="number" name="stok" required placeholder="0" min="0" class="block w-full px-4 py-2.5 border border-gray-300 rounded-md bg-white focus:outline-none focus:border-[#113285] focus:ring-1 focus:ring-[#113285] text-sm">
-                    </div>
+                        <div class="flex-1">
+                            <label class="block text-sm font-bold text-gray-700 mb-2">
+                                Cover Buku <span class="text-red-500">*</span>
+                            </label>
+
+                            <label for="cover"
+                                class="block w-full px-4 py-2.5 border border-gray-300 rounded-md bg-white focus:outline-none focus:border-[#113285] focus:ring-1 focus:ring-[#113285] text-sm">
+
+                                <span class="bg-[#113285] text-white px-3 py-1 rounded text-sm">
+                                    <i class="fa-solid fa-image mr-1"></i> Pilih File
+                                </span>
+<span id="file-name" class="ml-3 text-sm text-gray-500">
+                                    Belum ada file 
+                                </span>
+                            </label>
+
+                            <input type="file"
+                                id="cover"
+                                name="cover"
+                                accept="image/*"
+                                class="hidden"
+                                onchange="updateFileName(this)">
+                        </div>
+                        <div class="w-1/3">
+                            <label class="block text-sm font-bold text-gray-700 mb-2">Stock <span class="text-red-500">*</span></label>
+                            <input type="number" name="stok" required placeholder="0" min="0" class="block w-full px-4 py-2.5 border border-gray-300 rounded-md bg-white focus:outline-none focus:border-[#113285] focus:ring-1 focus:ring-[#113285] text-sm">
+                        </div>
                     </div>
                 </div>
 
@@ -174,5 +190,29 @@ if(isset($_FILES['cover']) && $_FILES['cover']['error'] == 0){
         </div>
     </main>
 
+    <script>
+function checkLength(input, max) {
+    // Cari elemen error berdasarkan ID (id="error-namaInput")
+    const errorElement = document.getElementById('error-' + input.name);
+    
+    if (input.value.length >= max) {
+        errorElement.classList.remove('hidden');
+        input.classList.add('border-red-500');
+    } else {
+        errorElement.classList.add('hidden');
+        input.classList.remove('border-red-500');
+    }
+}
+</script>
+
+<script>
+function updateFileName(input) {
+    const fileName = input.files.length
+        ? input.files[0].name
+        : 'Belum ada file dipilih';
+
+    document.getElementById('file-name').textContent = fileName;
+}
+</script>
 </body>
 </html>

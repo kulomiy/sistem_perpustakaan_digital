@@ -166,18 +166,31 @@ $text_cover = ($bg_cover == 'from-slate-100 to-slate-300') ? 'text-gray-800' : '
     </nav>
 
     <main class="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10">
-        <div class="mb-8 flex justify-between items-center">
-            <nav class="flex text-sm text-gray-500 font-medium">
-                <a href="beranda.php" class="hover:text-[#1e3a8a] transition">Home</a>
-                <span class="mx-2">/</span>
-                <a href="beranda.php?kategori=<?= $buku['id_kategori'] ?>" class="hover:text-[#1e3a8a] transition"><?= htmlspecialchars($buku['nama_kategori'] ?? 'Kategori') ?></a>
-                <span class="mx-2">/</span>
-                <span class="text-gray-900 line-clamp-1 max-w-[200px] md:max-w-[400px]"><?= htmlspecialchars($buku['judul']) ?></span>
-            </nav>
-            <a href="beranda.php" class="text-sm font-semibold text-gray-600 bg-white border border-gray-300 px-4 py-2 rounded-lg hover:bg-gray-50 transition flex items-center gap-2 shadow-sm">
-                <i class="fa-solid fa-arrow-left"></i> Kembali
-            </a>
-        </div>
+      <div class="mb-8 flex items-center gap-3">
+
+    <a href="beranda.php"
+       class="w-9 h-9 flex items-center justify-center rounded-full text-gray-500 hover:bg-gray-100 hover:text-[#1e3a8a] transition">
+        <i class="fa-solid fa-arrow-left"></i>
+    </a>
+
+    <nav class="flex text-sm text-gray-500 font-medium">
+        <a href="beranda.php" class="hover:text-[#1e3a8a] transition">Home</a>
+
+        <span class="mx-2">/</span>
+
+        <a href="beranda.php?kategori=<?= $buku['id_kategori'] ?>"
+           class="hover:text-[#1e3a8a] transition">
+            <?= htmlspecialchars($buku['nama_kategori'] ?? 'Kategori') ?>
+        </a>
+
+        <span class="mx-2">/</span>
+
+        <span class="text-gray-900">
+            <?= htmlspecialchars($buku['judul']) ?>
+        </span>
+    </nav>
+
+</div>
 
         <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden flex flex-col md:flex-row">
             <div class="md:w-1/3 p-8 bg-gray-50 flex items-center justify-center border-b md:border-b-0 md:border-r border-gray-200">
@@ -216,10 +229,10 @@ $text_cover = ($bg_cover == 'from-slate-100 to-slate-300') ? 'text-gray-800' : '
                     </span>
                 </div>
 
-                <h1 class="text-3xl lg:text-4xl font-extrabold text-gray-900 mb-2 leading-tight"><?= htmlspecialchars($buku['judul']) ?></h1>
-                <p class="text-lg text-gray-500 font-medium mb-8">Oleh <span class="text-[#1e3a8a]"><?= htmlspecialchars($buku['penulis']) ?></span></p>
+                <h1 class="text-2xl lg:text-3xl font-bold text-gray-900 mb-3 leading-tight"><?= htmlspecialchars($buku['judul']) ?></h1>
+                <p class="text-base text-gray-500 font-medium mb-6">Oleh <span class="text-[#1e3a8a]"><?= htmlspecialchars($buku['penulis']) ?></span></p>
 
-                <div class="bg-gray-50 rounded-xl p-5 border border-gray-100 mb-8 grid grid-cols-2 gap-y-4 gap-x-6 flex-1">
+               <div class="bg-gray-50 rounded-xl p-5 border border-gray-100 mb-8 grid grid-cols-2 gap-y-4 gap-x-6 flex-1">
                     <div>
                         <p class="text-xs text-gray-400 font-bold uppercase tracking-wider mb-1">Penerbit</p>
                         <p class="text-sm text-gray-900 font-semibold"><?= htmlspecialchars($buku['penerbit']) ?></p>

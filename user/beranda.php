@@ -65,6 +65,8 @@
                 font-family: 'Inter', sans-serif;
                 background-color: #ffffff;
             }
+            .scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
         </style>
     </head>
 
@@ -146,31 +148,23 @@
                 </div>
             </div>
 
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
-                <div class="flex flex-wrap gap-3">
-                    <?php
-                    $semua_class = empty($kategori_aktif)
-                        ? 'bg-blue-100 text-[#1e3a8a] border-blue-200 font-bold'
-                        : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50 font-semibold';
-                    ?>
-                    <a href="beranda.php<?= $search_only_param ?>" class="<?= $semua_class ?> border px-4 py-1.5 rounded-full text-xs transition shadow-sm hover:shadow">Semua Kategori</a>
+           <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 mb-12">
+    <div class="flex overflow-x-auto whitespace-nowrap justify-start md:justify-center gap-3 pb-4 scrollbar-hide">
+        
+        <a href="?kategori=" class="px-4 py-2 rounded-full text-xs font-bold transition <?= empty($kategori_aktif) ? 'bg-[#1e3a8a] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' ?>">
+            Semua Kategori
+        </a>
 
-                    <?php
-                    if ($query_kategori && mysqli_num_rows($query_kategori) > 0) {
-                        while ($kat = mysqli_fetch_assoc($query_kategori)) {
-                            $btn_class = ($kategori_aktif == $kat['id_kategori'])
-                                ? 'bg-blue-100 text-[#1e3a8a] border-blue-200 font-bold'
-                                : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50 hover:text-gray-900 font-semibold';
-                    ?>
-                            <a href="beranda.php?kategori=<?= $kat['id_kategori'] ?><?= $search_param ?>" class="<?= $btn_class ?> border px-4 py-1.5 rounded-full text-xs transition shadow-sm hover:shadow">
-                                <?= htmlspecialchars($kat['nama_kategori']) ?>
-                            </a>
-                    <?php
-                        }
-                    }
-                    ?>
-                </div>
-            </div>
+        <?php while($kat = mysqli_fetch_assoc($query_kategori)) { 
+            $is_active = ($kategori_aktif == $kat['id_kategori']);
+        ?>
+            <a href="?kategori=<?= $kat['id_kategori'] ?>" class="px-4 py-2 rounded-full text-xs font-bold transition <?= $is_active ? 'bg-[#1e3a8a] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' ?>">
+                <?= htmlspecialchars($kat['nama_kategori']) ?>
+            </a>
+        <?php } ?>
+        
+    </div>
+</div>
 
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 mb-16">
                 <div class="flex justify-between items-end border-b border-gray-200 pb-3 mb-6">

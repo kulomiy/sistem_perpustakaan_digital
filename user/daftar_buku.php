@@ -39,7 +39,12 @@ if (!empty($kategori_aktif)) {
 if (!empty($search)) {
     $sql_buku .= " AND (judul LIKE '%$search%' OR penulis LIKE '%$search%' OR penerbit LIKE '%$search%')";
 }
-$sql_buku .= " ORDER BY judul ASC";
+// Tambahkan penangkapan limit (default 6)
+$limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
+
+// Modifikasi query sql_buku
+// Ubah bagian akhir query menjadi:
+$sql_buku .= " ORDER BY judul ASC LIMIT $limit";
 $query_buku = mysqli_query($conn, $sql_buku);
 
 $search_param = !empty($search) ? '&search=' . urlencode($search) : '';
@@ -60,6 +65,9 @@ $search_only_param = !empty($search) ? '?search=' . urlencode($search) : '';
             font-family: 'Inter', sans-serif;
             background-color: #ffffff;
         }
+
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
 
@@ -80,14 +88,6 @@ $search_only_param = !empty($search) ? '?search=' . urlencode($search) : '';
 
                 <!-- Profile Menu -->
                 <div class="flex items-center gap-5 text-gray-500 relative">
-
-                    <!-- Search Bar Baru di Navigasi -->
-                    <form action="daftar_buku.php" method="GET" class="hidden md:flex items-center bg-gray-100 rounded-full px-4 py-1.5 border border-gray-200 focus-within:ring-2 focus-within:ring-blue-200">
-                        <input type="text" name="search" value="<?= htmlspecialchars($search) ?>" placeholder="Telusuri..." class="bg-transparent border-none focus:outline-none text-sm w-32 md:w-48 px-1">
-                        <button type="submit" class="text-gray-400 hover:text-[#1e3a8a]">
-                            <i class="fa-solid fa-magnifying-glass text-sm"></i>
-                        </button>
-                    </form>
 
                     <button id="profile-btn" class="w-9 h-9 rounded-full bg-gradient-to-br from-[#c900ff] to-[#8000ff] text-white font-medium text-sm flex items-center justify-center shadow-sm cursor-pointer hover:ring-2 hover:ring-purple-300 transition focus:outline-none">
                         <?= $inisial ?>
@@ -126,36 +126,53 @@ $search_only_param = !empty($search) ? '?search=' . urlencode($search) : '';
             </div>
         </div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 mb-4">
+    <div class="flex overflow-x-auto whitespace-nowrap justify-start md:justify-center gap-2 pb-1 scrollbar-hide">
+        
+        <a href="?kategori=" class="px-4 py-2 rounded-full text-xs font-bold transition <?= empty($kategori_aktif) ? 'bg-[#1e3a8a] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' ?>">
+            Semua Kategori
+        </a>
 
-                <div class="flex flex-wrap gap-2">
-                    <?php
-                    $semua_class = empty($kategori_aktif)
-                        ? 'bg-blue-100 text-[#1e3a8a] border-blue-200 font-bold'
-                        : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50 font-semibold';
-                    ?>
-                    <a href="daftar_buku.php<?= $search_only_param ?>" class="<?= $semua_class ?> border px-4 py-2 rounded-full text-xs transition shadow-sm hover:shadow">Semua Kategori</a>
+        <?php while($kat = mysqli_fetch_assoc($query_kategori)) { 
+            $is_active = ($kategori_aktif == $kat['id_kategori']);
+        ?>
+            <a href="?kategori=<?= $kat['id_kategori'] ?>" class="px-4 py-2 rounded-full text-xs font-bold transition <?= $is_active ? 'bg-[#1e3a8a] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' ?>">
+                <?= htmlspecialchars($kat['nama_kategori']) ?>
+            </a>
+        <?php } ?>
+        
+    </div>
+</div>
 
-                    <?php
-                    if ($query_kategori && mysqli_num_rows($query_kategori) > 0) {
-                        while ($kat = mysqli_fetch_assoc($query_kategori)) {
-                            $btn_class = ($kategori_aktif == $kat['id_kategori'])
-                                ? 'bg-blue-100 text-[#1e3a8a] border-blue-200 font-bold'
-                                : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50 hover:text-gray-900 font-semibold';
-                    ?>
-                            <a href="daftar_buku.php?kategori=<?= $kat['id_kategori'] ?><?= $search_param ?>" class="<?= $btn_class ?> border px-4 py-2 rounded-full text-xs transition shadow-sm hover:shadow">
-                                <?= htmlspecialchars($kat['nama_kategori']) ?>
-                            </a>
-                    <?php
-                        }
-                    }
-                    ?>
-                </div>
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-2 mb-2">
+    
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4 mt-3">
+        
+        <div class="flex items-center gap-3 w-full md:w-auto">
+            <form method="GET" action="daftar_buku.php" class="flex items-center gap-2">
+                <input type="hidden" name="kategori" value="<?= htmlspecialchars($kategori_aktif) ?>">
+                <input type="hidden" name="search" value="<?= htmlspecialchars($search) ?>">
+                
+                <span class="text-sm text-gray-500">Tampilkan</span>
+                <select name="limit" onchange="this.form.submit()" class="bg-white border border-gray-300 rounded-lg px-2 py-1 text-sm font-semibold text-gray-700 outline-none focus:ring-1 focus:ring-blue-500">
+                    <option value="15" <?= $limit == 15 ? 'selected' : '' ?>>15</option>
+                    <option value="25" <?= $limit == 25 ? 'selected' : '' ?>>25</option>
+                    <option value="50" <?= $limit == 50 ? 'selected' : '' ?>>50</option>
+                </select>
+            </form>
+        </div>
 
-                <div class="text-sm font-semibold text-gray-500 bg-gray-50 px-4 py-2 rounded-lg border border-gray-200">
-                    Menampilkan <span class="text-[#1e3a8a]"><?= mysqli_num_rows($query_buku) ?></span> Buku
-                </div>
+        <form action="daftar_buku.php" method="GET" class="flex items-center bg-white rounded-lg px-4 py-2 border border-gray-300 w-full md:w-80 shadow-sm focus-within:ring-1 focus-within:ring-blue-300">
+            <input type="hidden" name="kategori" value="<?= htmlspecialchars($kategori_aktif) ?>">
+            <input type="hidden" name="limit" value="<?= $limit ?>">
+            <input type="text" name="search" value="<?= htmlspecialchars($search) ?>" placeholder="Telusuri..." class="bg-transparent border-none focus:outline-none text-sm w-full px-2 text-gray-700">
+            <button type="submit" class="text-gray-400 hover:text-[#1e3a8a]">
+                <i class="fa-solid fa-magnifying-glass text-sm"></i>
+            </button>
+        </form>
+
+    </div>
+</div>
             </div>
 
             <hr class="border-gray-200 mb-8">

@@ -13,8 +13,8 @@ if(isset($_POST['id_buku']) && isset($_SESSION['user_id'])) {
         SELECT id_pinjam
         FROM peminjaman
         WHERE id_user = '$id_user'
-          AND id_buku = '$id_buku'
-          AND status IN ('Aktif', 'Antri')
+        AND id_buku = '$id_buku'
+        AND status IN ('Aktif', 'Antri')
     ");
 
     if(mysqli_num_rows($cek_riwayat) > 0) {
@@ -37,7 +37,7 @@ if(isset($_POST['id_buku']) && isset($_SESSION['user_id'])) {
     if($data_buku && $data_buku['stok'] > 0) {
         
         $query_pinjam = "INSERT INTO peminjaman (id_user, id_buku, tanggal_pinjam, tanggal_kembali, status) 
-                         VALUES ('$id_user', '$id_buku', '$tgl_pinjam', '$tgl_kembali', 'Aktif')";
+                        VALUES ('$id_user', '$id_buku', '$tgl_pinjam', '$tgl_kembali', 'Aktif')";
 
         if(mysqli_query($conn, $query_pinjam)) {
             mysqli_query($conn, "UPDATE buku SET stok = stok - 1 WHERE id_buku = '$id_buku'");
