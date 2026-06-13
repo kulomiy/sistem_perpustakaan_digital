@@ -12,10 +12,20 @@ if (isset($_POST['simpan'])) {
     // Ambil nilai kategori sebagai angka (ID)
     $id_kategori = (int)$_POST['id_kategori'];
     $stok = (int)$_POST['stok'];
+    $cover = '';
+
+if(isset($_FILES['cover']) && $_FILES['cover']['error'] == 0){
+    $namaFile = time() . '_' . $_FILES['cover']['name'];
+    move_uploaded_file(
+        $_FILES['cover']['tmp_name'],
+        "../uploads/cover/" . $namaFile
+    );
+    $cover = $namaFile;
+}
 
     // Query INSERT disesuaikan persis dengan nama kolom di database
-    $query = "INSERT INTO buku (judul, penulis, penerbit, tahun_terbit, id_kategori, stok) 
-              VALUES ('$judul', '$penulis', '$penerbit', '$tahun_terbit', $id_kategori, $stok)";
+    $query = "INSERT INTO buku (judul, penulis, penerbit, tahun_terbit, id_kategori, stok, cover)
+            VALUES('$judul', '$penulis', '$penerbit', '$tahun_terbit', $id_kategori, $stok, '$cover')";
     
     if (mysqli_query($conn, $query)) {
         echo "<script>alert('Buku baru berhasil ditambahkan!'); window.location.href='data_buku.php';</script>";
@@ -99,7 +109,7 @@ if (isset($_POST['simpan'])) {
             
             <?php if(isset($error)) echo "<div class='p-4 bg-red-50 text-red-600 border-b border-red-100 text-sm'>$error</div>"; ?>
 
-            <form action="" method="POST" class="p-6">
+            <form action="" method="POST" enctype="multipart/form-data" class="p-6">
                 <div class="space-y-5">
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-2">Judul Buku <span class="text-red-500">*</span></label>
@@ -138,10 +148,17 @@ if (isset($_POST['simpan'])) {
                                 <?php } ?>
                             </select>
                         </div>
-                        <div class="w-1/3">
-                            <label class="block text-sm font-bold text-gray-700 mb-2">Stock <span class="text-red-500">*</span></label>
-                            <input type="number" name="stok" required placeholder="0" min="0" class="block w-full px-4 py-2.5 border border-gray-300 rounded-md bg-white focus:outline-none focus:border-[#113285] focus:ring-1 focus:ring-[#113285] text-sm">
-                        </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Cover Buku</label>
+                        <input type="file"
+                            name="cover"
+                            accept="image/*"
+                            class="block w-full px-4 py-2.5 border border-gray-300 rounded-md">
+                    </div>
+                    <div class="w-1/3">
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Stock <span class="text-red-500">*</span></label>
+                        <input type="number" name="stok" required placeholder="0" min="0" class="block w-full px-4 py-2.5 border border-gray-300 rounded-md bg-white focus:outline-none focus:border-[#113285] focus:ring-1 focus:ring-[#113285] text-sm">
+                    </div>
                     </div>
                 </div>
 
