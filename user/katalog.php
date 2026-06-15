@@ -12,6 +12,7 @@ $query_buku = mysqli_query($conn, "SELECT * FROM buku LIMIT 8");
     <title>Katalog Buku - E-Library Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-gray-50">
     <nav class="bg-white shadow px-6 py-4 flex justify-between items-center">
         <div class="text-xl font-bold text-blue-800">E-Library Portal</div>

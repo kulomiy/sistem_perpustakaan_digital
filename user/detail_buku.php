@@ -124,7 +124,7 @@ $text_cover = ($bg_cover == 'from-slate-100 to-slate-300') ? 'text-gray-800' : '
                     <span class="text-[#1e3a8a] font-extrabold text-xl tracking-tight">E-Library Portal</span>
                 </div>
 
-                <div class="hidden md:flex space-x-8">
+                <div class="hidden md:flex   space-x-8">
                     <a href="beranda.php" class="border-b-2 border-transparent text-gray-500 hover:text-gray-900 hover:border-gray-300 inline-flex items-center px-1 pt-1 text-sm font-medium transition">Home</a>
                     <a href="daftar_buku.php" class="border-b-2 border-transparent text-gray-500 hover:text-gray-900 hover:border-gray-300 inline-flex items-center px-1 pt-1 text-sm font-medium transition">Daftar Buku</a>
                     <a href="activity.php" class="border-b-2 border-transparent text-gray-500 hover:text-gray-900 hover:border-gray-300 inline-flex items-center px-1 pt-1 text-sm font-medium transition">Riwayat Buku</a>
@@ -165,32 +165,32 @@ $text_cover = ($bg_cover == 'from-slate-100 to-slate-300') ? 'text-gray-800' : '
         </div>
     </nav>
 
-    <main class="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10">
-      <div class="mb-8 flex items-center gap-3">
+    <main class="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-4 pb-10">
+        <div class="mb-4 flex items-center gap-3">
 
-    <a href="beranda.php"
-       class="w-9 h-9 flex items-center justify-center rounded-full text-gray-500 hover:bg-gray-100 hover:text-[#1e3a8a] transition">
-        <i class="fa-solid fa-arrow-left"></i>
-    </a>
+            <a href="beranda.php"
+                class="w-9 h-9 flex items-center justify-center rounded-full text-gray-500 hover:bg-gray-100 hover:text-[#1e3a8a] transition">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
 
-    <nav class="flex text-sm text-gray-500 font-medium">
-        <a href="beranda.php" class="hover:text-[#1e3a8a] transition">Home</a>
+            <nav class="flex text-sm text-gray-500 font-medium">
+                <a href="beranda.php" class="hover:text-[#1e3a8a] transition">Home</a>
 
-        <span class="mx-2">/</span>
+                <span class="mx-2">/</span>
 
-        <a href="beranda.php?kategori=<?= $buku['id_kategori'] ?>"
-           class="hover:text-[#1e3a8a] transition">
-            <?= htmlspecialchars($buku['nama_kategori'] ?? 'Kategori') ?>
-        </a>
+                <a href="beranda.php?kategori=<?= $buku['id_kategori'] ?>"
+                    class="hover:text-[#1e3a8a] transition">
+                    <?= htmlspecialchars($buku['nama_kategori'] ?? 'Kategori') ?>
+                </a>
 
-        <span class="mx-2">/</span>
+                <span class="mx-2">/</span>
 
-        <span class="text-gray-900">
-            <?= htmlspecialchars($buku['judul']) ?>
-        </span>
-    </nav>
+                <span class="text-gray-900">
+                    <?= htmlspecialchars($buku['judul']) ?>
+                </span>
+            </nav>
 
-</div>
+        </div>
 
         <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden flex flex-col md:flex-row">
             <div class="md:w-1/3 p-8 bg-gray-50 flex items-center justify-center border-b md:border-b-0 md:border-r border-gray-200">
@@ -232,7 +232,7 @@ $text_cover = ($bg_cover == 'from-slate-100 to-slate-300') ? 'text-gray-800' : '
                 <h1 class="text-2xl lg:text-3xl font-bold text-gray-900 mb-3 leading-tight"><?= htmlspecialchars($buku['judul']) ?></h1>
                 <p class="text-base text-gray-500 font-medium mb-6">Oleh <span class="text-[#1e3a8a]"><?= htmlspecialchars($buku['penulis']) ?></span></p>
 
-               <div class="bg-gray-50 rounded-xl p-5 border border-gray-100 mb-8 grid grid-cols-2 gap-y-4 gap-x-6 flex-1">
+                <div class="bg-gray-50 rounded-xl p-5 border border-gray-100 mb-8 grid grid-cols-2 gap-y-4 gap-x-6 flex-1">
                     <div>
                         <p class="text-xs text-gray-400 font-bold uppercase tracking-wider mb-1">Penerbit</p>
                         <p class="text-sm text-gray-900 font-semibold"><?= htmlspecialchars($buku['penerbit']) ?></p>
@@ -248,6 +248,26 @@ $text_cover = ($bg_cover == 'from-slate-100 to-slate-300') ? 'text-gray-800' : '
                     <div>
                         <p class="text-xs text-gray-400 font-bold uppercase tracking-wider mb-1">Stok Fisik/Digital</p>
                         <p class="text-sm text-gray-900 font-semibold"><?= htmlspecialchars($buku['stok']) ?> Eksemplar</p>
+                    </div>
+                </div>
+
+                <!-- Sinopsis -->
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold text-gray-700 mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-align-left text-[#1e3a8a]"></i>
+                        Sinopsis
+                    </h3>
+
+                    <div class="bg-gray-50 border border-gray-100 rounded-xl p-5">
+                        <?php if (!empty($buku['sinopsis'])): ?>
+                            <p class="text-sm text-gray-600 leading-7 text-justify">
+                                <?= nl2br(htmlspecialchars($buku['sinopsis'])) ?>
+                            </p>
+                        <?php else: ?>
+                            <p class="text-sm italic text-gray-400">
+                                Sinopsis buku belum tersedia.
+                            </p>
+                        <?php endif; ?>
                     </div>
                 </div>
 
@@ -344,16 +364,11 @@ $text_cover = ($bg_cover == 'from-slate-100 to-slate-300') ? 'text-gray-800' : '
         </div>
     <?php endif; ?>
 
-    <footer class="bg-white border-t border-gray-200 py-8 mt-auto relative z-10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+    <footer class="bg-[#f8fafc] border-t border-gray-200 py-8 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center">
             <div>
                 <h4 class="text-[#1e3a8a] font-bold text-sm mb-1">E-Library Portal</h4>
-                <p class="text-[11px] text-gray-500 font-medium">&copy; <?= date('Y'); ?> Digital Library Management System. Knowledge-Centric & Accessible.</p>
-            </div>
-            <div class="flex gap-6 text-[11px] font-semibold text-gray-500">
-                <a href="#" class="hover:text-[#1e3a8a] transition">Privacy Policy</a>
-                <a href="#" class="hover:text-[#1e3a8a] transition">Terms of Service</a>
-                <a href="#" class="hover:text-[#1e3a8a] transition">Help Center</a>
+                <p class="text-[11px] text-gray-500 font-medium">&copy; <?= date('Y'); ?> Digital Library Management System</p>
             </div>
         </div>
     </footer>

@@ -66,13 +66,18 @@ $search_only_param = !empty($search) ? '?search=' . urlencode($search) : '';
             background-color: #ffffff;
         }
 
-        .scrollbar-hide::-webkit-scrollbar { display: none; }
-.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
     </style>
 </head>
 
 <body class="flex flex-col min-h-screen">
-
     <nav class="border-b border-gray-200 bg-white sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
@@ -86,9 +91,7 @@ $search_only_param = !empty($search) ? '?search=' . urlencode($search) : '';
                     <a href="activity.php" class="border-b-2 border-transparent text-gray-500 hover:text-gray-900 hover:border-gray-300 inline-flex items-center px-1 pt-1 text-sm font-medium transition">Riwayat Buku</a>
                 </div>
 
-                <!-- Profile Menu -->
                 <div class="flex items-center gap-5 text-gray-500 relative">
-
                     <button id="profile-btn" class="w-9 h-9 rounded-full bg-gradient-to-br from-[#c900ff] to-[#8000ff] text-white font-medium text-sm flex items-center justify-center shadow-sm cursor-pointer hover:ring-2 hover:ring-purple-300 transition focus:outline-none">
                         <?= $inisial ?>
                     </button>
@@ -98,11 +101,13 @@ $search_only_param = !empty($search) ? '?search=' . urlencode($search) : '';
                             <div class="w-14 h-14 rounded-full bg-gradient-to-br from-[#c900ff] to-[#8000ff] text-white font-normal text-xl flex items-center justify-center border-2 border-[#263b96] shadow-sm">
                                 <?= $inisial ?>
                             </div>
+
                             <div class="min-w-0 flex-1">
                                 <h4 class="font-bold text-white text-[15px] truncate uppercase tracking-wide"><?= htmlspecialchars($username) ?></h4>
                                 <p class="text-blue-200 text-xs font-medium mt-0.5">Member Aktif</p>
                             </div>
                         </div>
+
                         <div class="p-2 bg-white flex flex-col">
                             <a href="security.php" class="px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:text-[#263b96] transition rounded-lg flex items-center gap-3">
                                 <i class="fa-solid fa-lock text-gray-400 w-4 text-center"></i> Change Password
@@ -118,65 +123,58 @@ $search_only_param = !empty($search) ? '?search=' . urlencode($search) : '';
     </nav>
 
     <main class="flex-1">
-
-        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-blue-100 py-10">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h1 class="text-3xl font-extrabold text-[#0f172a] mb-3">Daftar Koleksi Buku</h1>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+                <div class="bg-gradient-to-br from-blue-100 via-indigo-50 to-blue-50 rounded-2xl py-16 px-4 text-center border border-blue-100">
+                <h1 class="text-4xl font-extrabold text-[#0f172a] mb-3">Daftar Koleksi Buku</h1>
                 <p class="text-[#1e3a8a] text-sm md:text-base max-w-2xl mx-auto font-medium">Jelajahi seluruh koleksi literatur kami. Gunakan filter kategori untuk menemukan buku yang paling sesuai dengan minat Anda.</p>
             </div>
         </div>
 
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 mb-4">
-    <div class="flex overflow-x-auto whitespace-nowrap justify-start md:justify-center gap-2 pb-1 scrollbar-hide">
-        
-        <a href="?kategori=" class="px-4 py-2 rounded-full text-xs font-bold transition <?= empty($kategori_aktif) ? 'bg-[#1e3a8a] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' ?>">
-            Semua Kategori
-        </a>
-
-        <?php while($kat = mysqli_fetch_assoc($query_kategori)) { 
-            $is_active = ($kategori_aktif == $kat['id_kategori']);
-        ?>
-            <a href="?kategori=<?= $kat['id_kategori'] ?>" class="px-4 py-2 rounded-full text-xs font-bold transition <?= $is_active ? 'bg-[#1e3a8a] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' ?>">
-                <?= htmlspecialchars($kat['nama_kategori']) ?>
-            </a>
-        <?php } ?>
-        
-    </div>
-</div>
-
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-2 mb-2">
-    
-    <div class="flex flex-col md:flex-row justify-between items-center gap-4 mt-3">
-        
-        <div class="flex items-center gap-3 w-full md:w-auto">
-            <form method="GET" action="daftar_buku.php" class="flex items-center gap-2">
-                <input type="hidden" name="kategori" value="<?= htmlspecialchars($kategori_aktif) ?>">
-                <input type="hidden" name="search" value="<?= htmlspecialchars($search) ?>">
-                
-                <span class="text-sm text-gray-500">Tampilkan</span>
-                <select name="limit" onchange="this.form.submit()" class="bg-white border border-gray-300 rounded-lg px-2 py-1 text-sm font-semibold text-gray-700 outline-none focus:ring-1 focus:ring-blue-500">
-                    <option value="15" <?= $limit == 15 ? 'selected' : '' ?>>15</option>
-                    <option value="25" <?= $limit == 25 ? 'selected' : '' ?>>25</option>
-                    <option value="50" <?= $limit == 50 ? 'selected' : '' ?>>50</option>
-                </select>
-            </form>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 mb-8">
+            <div class="flex overflow-x-auto whitespace-nowrap justify-start md:justify-center gap-2 pb-1 scrollbar-hide">
+                <a href="?kategori=" class="px-4 py-2 rounded-full text-xs font-bold transition <?= empty($kategori_aktif) ? 'bg-[#1e3a8a] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' ?>">
+                    Semua Kategori
+                </a>
+                <?php while ($kat = mysqli_fetch_assoc($query_kategori)) {
+                    $is_active = ($kategori_aktif == $kat['id_kategori']);
+                ?>
+                    <a href="?kategori=<?= $kat['id_kategori'] ?>" class="px-4 py-2 rounded-full text-xs font-bold transition <?= $is_active ? 'bg-[#1e3a8a] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' ?>">
+                        <?= htmlspecialchars($kat['nama_kategori']) ?>
+                    </a>
+                <?php } ?>
+            </div>
         </div>
 
-        <form action="daftar_buku.php" method="GET" class="flex items-center bg-white rounded-lg px-4 py-2 border border-gray-300 w-full md:w-80 shadow-sm focus-within:ring-1 focus-within:ring-blue-300">
-            <input type="hidden" name="kategori" value="<?= htmlspecialchars($kategori_aktif) ?>">
-            <input type="hidden" name="limit" value="<?= $limit ?>">
-            <input type="text" name="search" value="<?= htmlspecialchars($search) ?>" placeholder="Telusuri..." class="bg-transparent border-none focus:outline-none text-sm w-full px-2 text-gray-700">
-            <button type="submit" class="text-gray-400 hover:text-[#1e3a8a]">
-                <i class="fa-solid fa-magnifying-glass text-sm"></i>
-            </button>
-        </form>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-2 mb-2">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 mt-3">
+                <div class="flex items-center gap-3 w-full md:w-auto">
+                    <form method="GET" action="daftar_buku.php" class="flex items-center gap-2">
+                        <input type="hidden" name="kategori" value="<?= htmlspecialchars($kategori_aktif) ?>">
+                        <input type="hidden" name="search" value="<?= htmlspecialchars($search) ?>">
 
-    </div>
-</div>
+                        <span class="text-sm text-gray-500">Tampilkan</span>
+                        <select name="limit" onchange="this.form.submit()" class="bg-white border border-gray-300 rounded-lg px-2 py-1 text-sm font-semibold text-gray-700 outline-none focus:ring-1 focus:ring-blue-500">
+                            <option value="15" <?= $limit == 15 ? 'selected' : '' ?>>15</option>
+                            <option value="25" <?= $limit == 25 ? 'selected' : '' ?>>25</option>
+                            <option value="50" <?= $limit == 50 ? 'selected' : '' ?>>50</option>
+                        </select>
+                    </form>
+                </div>
+
+                <form action="daftar_buku.php" method="GET" class="flex items-center bg-white rounded-lg px-4 py-2 border border-gray-300 w-full md:w-80 shadow-sm focus-within:ring-1 focus-within:ring-blue-300">
+                    <input type="hidden" name="kategori" value="<?= htmlspecialchars($kategori_aktif) ?>">
+                    <input type="hidden" name="limit" value="<?= $limit ?>">
+                    <input type="text" name="search" value="<?= htmlspecialchars($search) ?>" placeholder="Telusuri..." class="bg-transparent border-none focus:outline-none text-sm w-full px-2 text-gray-700">
+                    <button type="submit" class="text-gray-400 hover:text-[#1e3a8a]">
+                        <i class="fa-solid fa-magnifying-glass text-sm"></i>
+                    </button>
+                </form>
             </div>
+        </div>
+        </div>
 
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <hr class="border-gray-200 mb-8">
-
             <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 mb-16">
                 <?php
                 if ($query_buku && mysqli_num_rows($query_buku) > 0) {
@@ -227,18 +225,14 @@ $search_only_param = !empty($search) ? '?search=' . urlencode($search) : '';
                 <?php } ?>
             </div>
         </div>
+        </div>
     </main>
 
     <footer class="bg-[#f8fafc] border-t border-gray-200 py-8 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="max-w-7xl mx-auto px-4 text-center">
             <div>
                 <h4 class="text-[#1e3a8a] font-bold text-sm mb-1">E-Library Portal</h4>
-                <p class="text-[11px] text-gray-500 font-medium">&copy; <?= date('Y'); ?> Digital Library Management System. Knowledge-Centric & Accessible.</p>
-            </div>
-            <div class="flex gap-6 text-[11px] font-semibold text-gray-500">
-                <a href="#" class="hover:text-[#1e3a8a] transition">Privacy Policy</a>
-                <a href="#" class="hover:text-[#1e3a8a] transition">Terms of Service</a>
-                <a href="#" class="hover:text-[#1e3a8a] transition">Help Center</a>
+                <p class="text-[11px] text-gray-500 font-medium">&copy; <?= date('Y'); ?> Digital Library Management System</p>
             </div>
         </div>
     </footer>

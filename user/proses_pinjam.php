@@ -49,12 +49,10 @@ if(isset($_POST['id_buku']) && isset($_SESSION['user_id'])) {
     } 
     // JIKA STOK HABIS (0) -> MASUK ANTREAN
     else {
-        // Langsung insert ke peminjaman dengan status 'Antri'
-        $query_antri = "INSERT INTO peminjaman (id_user, id_buku, tanggal_pinjam, tanggal_kembali, status) 
-                        VALUES ('$id_user', '$id_buku', '$tgl_pinjam', '$tgl_kembali', 'Antri')";
+        $query_antri = "INSERT INTO peminjaman (id_user, id_buku, tanggal_antri, status) 
+                        VALUES ('$id_user', '$id_buku', CURDATE(), 'Antri')";
         
         if(mysqli_query($conn, $query_antri)) {
-            // Redirect dengan sinyal sukses 2 (Antre Berhasil)
             header("Location: detail_buku.php?id=$id_buku&sukses=2");
             exit();
         } else {

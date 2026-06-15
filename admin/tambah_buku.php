@@ -2,45 +2,38 @@
 session_start();
 require '../koneksi.php'; 
 
-// Proses jika tombol simpan ditekan
 if (isset($_POST['simpan'])) {
     $judul = mysqli_real_escape_string($conn, $_POST['judul']);
     $penulis = mysqli_real_escape_string($conn, $_POST['penulis']);
     $penerbit = mysqli_real_escape_string($conn, $_POST['penerbit']);
     $tahun_terbit = mysqli_real_escape_string($conn, $_POST['tahun_terbit']);
-    
-    // Ambil nilai kategori sebagai angka (ID)
     $id_kategori = (int)$_POST['id_kategori'];
     $stok = (int)$_POST['stok'];
     $cover = '';
 
-if(isset($_FILES['cover']) && $_FILES['cover']['error'] == 0){
-    $namaFile = time() . '_' . $_FILES['cover']['name'];
-    move_uploaded_file(
-        $_FILES['cover']['tmp_name'],
-        "../uploads/cover/" . $namaFile
-    );
-    $cover = $namaFile;
-}
+    if(isset($_FILES['cover']) && $_FILES['cover']['error'] == 0){
+        $namaFile = time() . '_' . $_FILES['cover']['name'];
+        move_uploaded_file($_FILES['cover']['tmp_name'], "../uploads/cover/" . $namaFile);
+        $cover = $namaFile;
+    }
 
-    // Query INSERT disesuaikan persis dengan nama kolom di database
     $query = "INSERT INTO buku (judul, penulis, penerbit, tahun_terbit, id_kategori, stok, cover)
-            VALUES('$judul', '$penulis', '$penerbit', '$tahun_terbit', $id_kategori, $stok, '$cover')";
+              VALUES('$judul', '$penulis', '$penerbit', '$tahun_terbit', $id_kategori, $stok, '$cover')";
     
     if (mysqli_query($conn, $query)) {
-        echo "<script>alert('Buku baru berhasil ditambahkan!'); window.location.href='data_buku.php';</script>";
-        exit();
+        echo "<script>alert('Buku berhasil ditambahkan!'); window.location.href='data_buku.php';</script>";
     } else {
-        $error = "Gagal menambahkan buku: " . mysqli_error($conn);
+        echo "<script>alert('Gagal menambahkan buku!');</script>";
     }
 }
+
+$kategori_query = mysqli_query($conn, "SELECT * FROM kategori");
 ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Buku - LibAdmin Pro</title>
+    <title>Tambah Buku - E-Library Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -48,142 +41,115 @@ if(isset($_FILES['cover']) && $_FILES['cover']['error'] == 0){
 </head>
 <body class="flex min-h-screen text-gray-800">
 
-    <aside class="w-64 bg-white border-r border-gray-200 flex flex-col fixed h-full z-20">
+    <aside class="w-64 bg-white border-r border-gray-200 flex flex-col fixed h-full z-20 shadow-sm">
         <div class="p-6 flex items-center gap-3">
-            <div class="bg-[#1a56db] text-white p-2 rounded-lg flex items-center justify-center w-10 h-10">
-                <i class="fa-solid fa-book-open text-lg"></i>
+            <div class="bg-[#1e3a8a] text-white p-2.5 rounded-xl flex items-center justify-center">
+                <i class="fa-solid fa-book-open text-xl"></i>
             </div>
             <div>
-                <h1 class="text-[#1a56db] text-lg font-bold leading-tight">LibAdmin Pro</h1>
-                <p class="text-[11px] text-gray-500 font-medium">Library Management System</p>
+                <h1 class="text-[#1e3a8a] font-bold text-lg leading-none">Admin Panel</h1>
+                <p class="text-xs text-gray-500 mt-1 font-medium">E-Library Portal</p>
             </div>
         </div>
 
-        <nav class="flex-1 px-4 mt-2 space-y-1">
-            <a href="dashboard.php" class="flex items-center gap-3 text-gray-600 hover:bg-gray-50 hover:text-gray-900 px-3 py-2.5 rounded-md text-sm font-medium transition">
-                <i class="fa-solid fa-table-cells-large w-5 text-center"></i> Dashboard
+        <nav class="flex-1 px-4 py-4 space-y-1.5 overflow-y-auto">
+            <a href="dashboard.php" class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-blue-50 hover:text-[#1e3a8a] rounded-xl font-medium transition">
+                <i class="fa-solid fa-chart-pie w-5"></i> Dashboard
             </a>
-            <a href="data_buku.php" class="flex items-center gap-3 bg-blue-50 text-[#1a56db] px-3 py-2.5 rounded-md text-sm font-semibold">
-                <i class="fa-solid fa-book w-5 text-center"></i> Data Buku
+            <a href="data_buku.php" class="flex items-center gap-3 px-4 py-3 bg-[#1e3a8a] text-white rounded-xl font-semibold shadow-sm">
+                <i class="fa-solid fa-book w-5"></i> Data Buku
             </a>
-            <a href="data_anggota.php" class="flex items-center gap-3 text-gray-600 hover:bg-gray-50 hover:text-gray-900 px-3 py-2.5 rounded-md text-sm font-medium transition">
-                <i class="fa-solid fa-user-group w-5 text-center"></i> Data Anggota
+            <a href="data_anggota.php" class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-blue-50 hover:text-[#1e3a8a] rounded-xl font-medium transition">
+                <i class="fa-solid fa-users w-5"></i> Data Anggota
             </a>
-            <a href="akses_buku.php" class="flex items-center gap-3 text-gray-600 hover:bg-gray-50 hover:text-gray-900 px-3 py-2.5 rounded-md text-sm font-medium transition">
-                <i class="fa-regular fa-handshake w-5 text-center"></i> Akses Buku
+            <div class="pt-4 pb-2">
+                <p class="px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Transaksi</p>
+            </div>
+            <a href="akses_buku.php" class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-blue-50 hover:text-[#1e3a8a] rounded-xl font-medium transition">
+                <i class="fa-solid fa-key w-5"></i> Akses Aktif
             </a>
-            <a href="riwayat_akses.php" class="flex items-center gap-3 text-gray-600 hover:bg-gray-50 hover:text-gray-900 px-3 py-2.5 rounded-md text-sm font-medium transition">
-                <i class="fa-solid fa-arrow-right-from-bracket w-5 text-center transform rotate-180"></i> Riwayat Akses
+            <a href="riwayat_akses.php" class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-blue-50 hover:text-[#1e3a8a] rounded-xl font-medium transition">
+                <i class="fa-solid fa-clock-rotate-left w-5"></i> Riwayat
             </a>
         </nav>
-
-        <div class="border-t border-gray-200 mt-auto">
-            <div class="p-4 flex items-center gap-3">
-                <img src="https://ui-avatars.com/api/?name=Admin+User&background=1f2937&color=fff" alt="Admin" class="w-9 h-9 rounded-md object-cover">
-                <div class="flex-1 min-w-0">
-                    <p class="text-sm font-bold text-gray-900 truncate">Admin User</p>
-                    <p class="text-[11px] text-gray-500 truncate">System Administrator</p>
-                </div>
-            </div>
-            <a href="../login.php" class="flex items-center gap-3 text-red-600 hover:bg-red-50 px-7 py-3 text-sm font-bold transition border-t border-gray-100">
-                <i class="fa-solid fa-arrow-right-from-bracket w-5"></i> Logout
-            </a>
-        </div>
     </aside>
 
     <main class="ml-64 flex-1 p-8">
-        <div class="flex items-center gap-4 mb-8">
-            <a href="data_buku.php" class="w-10 h-10 bg-white border border-gray-200 rounded-full flex items-center justify-center text-gray-500 hover:bg-gray-50 hover:text-gray-900 transition">
+        <div class="mb-8 flex items-center gap-4">
+            <a href="data_buku.php" class="w-10 h-10 bg-white border border-gray-200 rounded-xl flex items-center justify-center text-gray-500 hover:bg-gray-50 hover:text-[#1e3a8a] transition">
                 <i class="fa-solid fa-arrow-left"></i>
             </a>
             <div>
-                <h2 class="text-3xl font-bold text-gray-900 mb-1">Tambah Buku Baru</h2>
-                <p class="text-gray-500 text-sm">Lengkapi formulir di bawah ini untuk menambahkan buku ke dalam katalog.</p>
+                <h2 class="text-2xl font-bold text-gray-900">Tambah Buku Baru</h2>
+                <p class="text-gray-500 text-sm mt-1">Masukkan informasi detail buku dengan lengkap.</p>
             </div>
         </div>
 
-        <div class="bg-white border border-gray-200 rounded-xl shadow-sm max-w-3xl">
-            <div class="p-6 border-b border-gray-100">
-                <h3 class="font-bold text-gray-900">Informasi Buku</h3>
-            </div>
-            
-            <?php if(isset($error)) echo "<div class='p-4 bg-red-50 text-red-600 border-b border-red-100 text-sm'>$error</div>"; ?>
-
-            <form action="" method="POST" enctype="multipart/form-data" class="p-6">
-                <div class="space-y-5">
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 max-w-4xl">
+            <form action="" method="POST" enctype="multipart/form-data" class="space-y-6">
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-2">Judul Buku <span class="text-red-500">*</span></label>
-                        <input type="text" name="judul" required placeholder="Judul Buku" class="block w-full px-4 py-2.5 border border-gray-300 rounded-md bg-white focus:outline-none focus:border-[#113285] focus:ring-1 focus:ring-[#113285] text-sm">
+                        <input type="text" name="judul" required class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:border-[#1e3a8a] focus:ring-1 focus:ring-[#1e3a8a] text-sm bg-white" placeholder="Contoh: Laskar Pelangi">
                     </div>
-
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-2">Penulis <span class="text-red-500">*</span></label>
-                        <input type="text" name="penulis" required placeholder="Nama Penulis" class="block w-full px-4 py-2.5 border border-gray-300 rounded-md bg-white focus:outline-none focus:border-[#113285] focus:ring-1 focus:ring-[#113285] text-sm">
+                        <input type="text" name="penulis" required class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:border-[#1e3a8a] focus:ring-1 focus:ring-[#1e3a8a] text-sm bg-white" placeholder="Nama penulis buku">
                     </div>
-
-                    <div class="flex gap-4">
-                        <div class="flex-1">
-                            <label class="block text-sm font-bold text-gray-700 mb-2">Penerbit <span class="text-red-500">*</span></label>
-                            <input type="text" name="penerbit" required placeholder="Nama Penerbit" class="block w-full px-4 py-2.5 border border-gray-300 rounded-md bg-white focus:outline-none focus:border-[#113285] focus:ring-1 focus:ring-[#113285] text-sm">
-                        </div>
-                        <div class="w-1/3">
-                            <label class="block text-sm font-bold text-gray-700 mb-2">Tahun Terbit <span class="text-red-500">*</span></label>
-                            <input type="number" name="tahun_terbit" required placeholder="YYYY" min="1900" max="2099" class="block w-full px-4 py-2.5 border border-gray-300 rounded-md bg-white focus:outline-none focus:border-[#113285] focus:ring-1 focus:ring-[#113285] text-sm">
-                        </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Penerbit <span class="text-red-500">*</span></label>
+                        <input type="text" name="penerbit" required class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:border-[#1e3a8a] focus:ring-1 focus:ring-[#1e3a8a] text-sm bg-white" placeholder="Nama penerbit">
                     </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Tahun Terbit <span class="text-red-500">*</span></label>
+                        <input type="number" name="tahun_terbit" required class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:border-[#1e3a8a] focus:ring-1 focus:ring-[#1e3a8a] text-sm bg-white" placeholder="Contoh: 2023">
+                    </div>
+                </div>
 
-                    <div class="flex gap-4">
-                        <div class="flex-1/4">
-                            <label class="block text-sm font-bold text-gray-700 mb-2">Kategori <span class="text-red-500">*</span></label>
-                            <select name="id_kategori" required class="block w-full px-4 py-2.5 border border-gray-300 rounded-md bg-white focus:outline-none focus:border-[#113285] focus:ring-1 focus:ring-[#113285] text-sm">
-                                <option value="" disabled selected>Pilih kategori buku</option>
-                                <?php
-                                // Memanggil data kategori sesuai kodemu
-                                $q = mysqli_query($conn, "SELECT * FROM kategori");
-                                while ($k = mysqli_fetch_assoc($q)) {
-                                ?>
-                                    <option value="<?= $k['id_kategori'] ?>">
-                                        <?= htmlspecialchars($k['nama_kategori']) ?>
-                                    </option>
-                                <?php } ?>
-                            </select>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="col-span-2">
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Kategori <span class="text-red-500">*</span></label>
+                        <select name="id_kategori" required class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:border-[#1e3a8a] focus:ring-1 focus:ring-[#1e3a8a] text-sm bg-white">
+                            <option value="">-- Pilih Kategori --</option>
+                            <?php while ($k = mysqli_fetch_assoc($kategori_query)) { ?>
+                                <option value="<?= $k['id_kategori'] ?>"><?= htmlspecialchars($k['nama_kategori']) ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Stok <span class="text-red-500">*</span></label>
+                        <input type="number" name="stok" min="0" required class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:border-[#1e3a8a] focus:ring-1 focus:ring-[#1e3a8a] text-sm bg-white" placeholder="Jumlah">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Cover Buku (Opsional)</label>
+                    <div class="mt-1 flex flex-col items-center justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-xl hover:bg-gray-50 transition relative overflow-hidden">
+                        
+                        <input id="file-upload" name="cover" type="file" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" accept="image/*" onchange="previewImage(event)">
+                        
+                        <div id="upload-prompt" class="space-y-1 text-center">
+                            <i class="fa-solid fa-image text-gray-400 text-3xl mb-2"></i>
+                            <div class="flex text-sm text-gray-600 justify-center">
+                                <span class="relative bg-white rounded-md font-medium text-[#1e3a8a] hover:underline">Upload file</span>
+                                <p class="pl-1">atau drag and drop</p>
+                            </div>
+                            <p class="text-xs text-gray-500">PNG, JPG up to 2MB</p>
                         </div>
-                        <div class="flex-1">
-                            <label class="block text-sm font-bold text-gray-700 mb-2">
-                                Cover Buku <span class="text-red-500">*</span>
-                            </label>
 
-                            <label for="cover"
-                                class="block w-full px-4 py-2.5 border border-gray-300 rounded-md bg-white focus:outline-none focus:border-[#113285] focus:ring-1 focus:ring-[#113285] text-sm">
-
-                                <span class="bg-[#113285] text-white px-3 py-1 rounded text-sm">
-                                    <i class="fa-solid fa-image mr-1"></i> Pilih File
-                                </span>
-<span id="file-name" class="ml-3 text-sm text-gray-500">
-                                    Belum ada file 
-                                </span>
-                            </label>
-
-                            <input type="file"
-                                id="cover"
-                                name="cover"
-                                accept="image/*"
-                                class="hidden"
-                                onchange="updateFileName(this)">
-                        </div>
-                        <div class="w-1/3">
-                            <label class="block text-sm font-bold text-gray-700 mb-2">Stock <span class="text-red-500">*</span></label>
-                            <input type="number" name="stok" required placeholder="0" min="0" class="block w-full px-4 py-2.5 border border-gray-300 rounded-md bg-white focus:outline-none focus:border-[#113285] focus:ring-1 focus:ring-[#113285] text-sm">
+                        <div id="image-preview-container" class="hidden flex flex-col items-center justify-center w-full z-0">
+                            <img id="image-preview" src="#" alt="Preview Cover" class="h-40 w-auto object-contain mb-3 rounded shadow-sm border border-gray-200">
+                            <p id="file-name" class="text-sm font-bold text-[#1e3a8a] bg-blue-50 px-3 py-1 rounded-full"></p>
+                            <p class="text-xs text-gray-400 mt-1">Klik kotak ini lagi jika ingin mengganti gambar</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="mt-8 pt-5 border-t border-gray-100 flex justify-end gap-3">
-                    <a href="data_buku.php" class="px-5 py-2.5 rounded-md text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 transition">
-                        Batal
-                    </a>
-                    <button type="submit" name="simpan" class="bg-[#113285] text-white px-6 py-2.5 rounded-md text-sm font-semibold shadow hover:bg-blue-900 transition flex items-center gap-2">
-                        <i class="fa-solid fa-floppy-disk"></i> Simpan Data Buku
+                <div class="mt-8 pt-6 border-t border-gray-100 flex justify-end gap-3">
+                    <a href="data_buku.php" class="px-6 py-2.5 rounded-xl text-sm font-bold text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 transition">Batal</a>
+                    <button type="submit" name="simpan" class="bg-[#1e3a8a] text-white px-8 py-2.5 rounded-xl text-sm font-bold shadow hover:bg-blue-900 transition flex items-center gap-2">
+                        <i class="fa-solid fa-floppy-disk"></i> Simpan Buku
                     </button>
                 </div>
             </form>
@@ -191,28 +157,36 @@ if(isset($_FILES['cover']) && $_FILES['cover']['error'] == 0){
     </main>
 
     <script>
-function checkLength(input, max) {
-    // Cari elemen error berdasarkan ID (id="error-namaInput")
-    const errorElement = document.getElementById('error-' + input.name);
-    
-    if (input.value.length >= max) {
-        errorElement.classList.remove('hidden');
-        input.classList.add('border-red-500');
-    } else {
-        errorElement.classList.add('hidden');
-        input.classList.remove('border-red-500');
-    }
-}
-</script>
+        function previewImage(event) {
+            const input = event.target;
+            const prompt = document.getElementById('upload-prompt');
+            const previewContainer = document.getElementById('image-preview-container');
+            const previewImage = document.getElementById('image-preview');
+            const fileNameDisplay = document.getElementById('file-name');
 
-<script>
-function updateFileName(input) {
-    const fileName = input.files.length
-        ? input.files[0].name
-        : 'Belum ada file dipilih';
-
-    document.getElementById('file-name').textContent = fileName;
-}
-</script>
+            // Jika user memilih file
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    // Set sumber gambar dari file yang dipilih
+                    previewImage.src = e.target.result;
+                    // Tampilkan nama file
+                    fileNameDisplay.textContent = input.files[0].name;
+                    
+                    // Sembunyikan prompt default, tampilkan preview gambar
+                    prompt.classList.add('hidden');
+                    previewContainer.classList.remove('hidden');
+                }
+                
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                // Jika user batal memilih file, kembalikan ke awal
+                previewImage.src = '#';
+                prompt.classList.remove('hidden');
+                previewContainer.classList.add('hidden');
+            }
+        }
+    </script>
 </body>
 </html>

@@ -15,7 +15,7 @@
     $data_user = mysqli_fetch_assoc($query_user);
     $username = $data_user['username'] ?? 'User';
 
-    // Membuat Inisial Nama dari Username (Contoh: Angela Salma -> AS)
+    // Membuat Inisial Nama dari Username 
     $words = explode(" ", trim($username));
     $inisial = "";
     if (count($words) >= 2) {
@@ -65,13 +65,19 @@
                 font-family: 'Inter', sans-serif;
                 background-color: #ffffff;
             }
-            .scrollbar-hide::-webkit-scrollbar { display: none; }
-.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+            .scrollbar-hide::-webkit-scrollbar {
+                display: none;
+            }
+
+            .scrollbar-hide {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
         </style>
     </head>
 
     <body class="flex flex-col min-h-screen">
-
         <nav class="border-b border-gray-200 bg-white sticky top-0 z-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between items-center h-16">
@@ -123,7 +129,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
                 <div class="bg-gradient-to-br from-blue-100 via-indigo-50 to-blue-50 rounded-2xl py-16 px-4 text-center border border-blue-100">
                     <h1 class="text-4xl font-extrabold text-[#0f172a] mb-4 tracking-tight">Jelajahi Dunia Pengetahuan</h1>
-                    <p class="text-[#1e3a8a] text-base md:text-lg max-w-2xl mx-auto mb-8 font-medium">Akses ribuan koleksi buku digital, jurnal, dan literatur akademik. Temukan inspirasi dan kembangkan wawasan Anda di E-Library Portal.</p>
+                    <p class="text-[#1e3a8a] text-sm md:text-base max-w-2xl mx-auto mb-8 font-medium">Akses ribuan koleksi buku digital, jurnal, dan literatur akademik. Temukan inspirasi dan kembangkan wawasan Anda di E-Library Portal.</p>
 
                     <div id="area-pencarian" class="max-w-2xl mx-auto relative scroll-mt-24">
                         <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
@@ -148,23 +154,23 @@
                 </div>
             </div>
 
-           <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 mb-12">
-    <div class="flex overflow-x-auto whitespace-nowrap justify-start md:justify-center gap-3 pb-4 scrollbar-hide">
-        
-        <a href="?kategori=" class="px-4 py-2 rounded-full text-xs font-bold transition <?= empty($kategori_aktif) ? 'bg-[#1e3a8a] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' ?>">
-            Semua Kategori
-        </a>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 mb-12">
+                <div class="flex overflow-x-auto whitespace-nowrap justify-start md:justify-center gap-3 pb-4 scrollbar-hide">
 
-        <?php while($kat = mysqli_fetch_assoc($query_kategori)) { 
-            $is_active = ($kategori_aktif == $kat['id_kategori']);
-        ?>
-            <a href="?kategori=<?= $kat['id_kategori'] ?>" class="px-4 py-2 rounded-full text-xs font-bold transition <?= $is_active ? 'bg-[#1e3a8a] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' ?>">
-                <?= htmlspecialchars($kat['nama_kategori']) ?>
-            </a>
-        <?php } ?>
-        
-    </div>
-</div>
+                    <a href="?kategori=" class="px-4 py-2 rounded-full text-xs font-bold transition <?= empty($kategori_aktif) ? 'bg-[#1e3a8a] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' ?>">
+                        Semua Kategori
+                    </a>
+
+                    <?php while ($kat = mysqli_fetch_assoc($query_kategori)) {
+                        $is_active = ($kategori_aktif == $kat['id_kategori']);
+                    ?>
+                        <a href="?kategori=<?= $kat['id_kategori'] ?>" class="px-4 py-2 rounded-full text-xs font-bold transition <?= $is_active ? 'bg-[#1e3a8a] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' ?>">
+                            <?= htmlspecialchars($kat['nama_kategori']) ?>
+                        </a>
+                    <?php } ?>
+
+                </div>
+            </div>
 
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 mb-16">
                 <div class="flex justify-between items-end border-b border-gray-200 pb-3 mb-6">
@@ -237,15 +243,10 @@
         </main>
 
         <footer class="bg-[#f8fafc] border-t border-gray-200 py-8 mt-auto">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="max-w-7xl mx-auto px-4 text-center">
                 <div>
                     <h4 class="text-[#1e3a8a] font-bold text-sm mb-1">E-Library Portal</h4>
-                    <p class="text-[11px] text-gray-500 font-medium">&copy; <?= date('Y'); ?> Digital Library Management System. Knowledge-Centric & Accessible.</p>
-                </div>
-                <div class="flex gap-6 text-[11px] font-semibold text-gray-500">
-                    <a href="#" class="hover:text-[#1e3a8a] transition">Privacy Policy</a>
-                    <a href="#" class="hover:text-[#1e3a8a] transition">Terms of Service</a>
-                    <a href="#" class="hover:text-[#1e3a8a] transition">Help Center</a>
+                    <p class="text-[11px] text-gray-500 font-medium">&copy; <?= date('Y'); ?> Digital Library Management System</p>
                 </div>
             </div>
         </footer>

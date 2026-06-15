@@ -96,7 +96,7 @@ $result_activity = @mysqli_query($conn, $query_activity);
         </div>
     </nav>
 
-    <main class="flex-1 max-w-5xl mx-auto w-full px-4 py-12">
+    <main class="flex-1 max-w-5xl mx-auto w-full px-4 pt-4 pb-12">
         <div class="flex justify-between items-end mb-8 border-b border-gray-100 pb-6">
             <div>
                 <h2 class="text-3xl font-extrabold text-[#0f172a] mb-2">Activity History</h2>
@@ -111,15 +111,17 @@ $result_activity = @mysqli_query($conn, $query_activity);
                     $judul = htmlspecialchars($row['judul'] ?? "Buku Tanpa Judul");
                     $status = strtolower($row['status'] ?? 'aktif');
 
-                    // Badge Styling Serasi dengan Beranda
-                    if ($status == 'selesai' || $status == 'dikembalikan') {
-                        $badge = '<span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-[10px] font-bold border border-gray-200">FINISHED</span>';
+                    if ($status == 'antri') {
+                        $badge = '<span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-[10px] font-bold border border-yellow-200">ANTRE</span>';
+                    } elseif ($status == 'aktif') {
+                        $badge = '<span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-[10px] font-bold border border-blue-200">ACTIVE</span>';
                     } else {
-                        $badge = '<span class="bg-blue-100 text-[#1e3a8a] px-3 py-1 rounded-full text-[10px] font-bold border border-blue-200">ACTIVE</span>';
+                        $badge = '<span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-[10px] font-bold border border-green-200">FINISHED</span>';
                     }
             ?>
                     <div class="bg-white border border-gray-200 rounded-xl p-5 flex items-center gap-6 shadow-sm hover:shadow-md transition">
 
+                        <!-- Cover Buku -->
                         <div class="w-16 h-20 rounded-lg overflow-hidden border border-gray-200 flex-shrink-0">
                             <?php if (!empty($row['cover'])): ?>
                                 <img src="../uploads/cover/<?= htmlspecialchars($row['cover']) ?>"
@@ -132,15 +134,121 @@ $result_activity = @mysqli_query($conn, $query_activity);
                             <?php endif; ?>
                         </div>
 
+                        <!-- Informasi Buku -->
                         <div class="flex-1">
                             <div class="mb-1"><?= $badge ?></div>
-                            <h3 class="text-lg font-bold text-gray-900"><?= $judul ?></h3>
+
+                            <h3 class="text-lg font-bold text-gray-900">
+                                <?= $judul ?>
+                            </h3>
+
                             <p class="text-sm text-gray-500">
                                 by <?= htmlspecialchars($row['penulis'] ?? '-') ?>
                             </p>
+
+                            <p class="text-xs text-gray-400 mt-2">
+                                Dipinjam:
+                                <?php
+                                if (
+                                    empty($row['tanggal_pinjam']) ||
+                                    $row['tanggal_pinjam'] == '0000-00-00'
+                                ) {
+                                    echo '-';
+                                } else {
+                                    echo date('d M Y', strtotime($row['tanggal_pinjam']));
+                                }
+                                ?>
+                            </p>
                         </div>
 
+                        <!-- Tombol Receipt -->
+                        <div class="flex-shrink-0">
+                            <button
+                                onclick="document.getElementById('receipt-<?= $row['id_pinjam'] ?>').classList.remove('hidden')"
+                                class="bg-[#1e3a8a] text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-900 transition">
+                                <i class="fa-solid fa-receipt mr-1"></i>
+                                Receipt
+                            </button>
+                        </div>
                     </div>
+
+                    <!-- MODAL RECEIPT -->
+                    <div id="receipt-<?= $row['id_pinjam'] ?>" class="hidden fixed inset-0 z-[9999] flex items-center justify-center p-2">
+
+                        <div class="absolute top-0 left-0 w-full h-full bg-black/60 backdrop-blur-sm"
+                            onclick="document.getElementById('receipt-<?= $row['id_pinjam'] ?>').classList.add('hidden')">
+                        </div>
+
+                        <div class="w-full max-w-sm relative shadow-2xl z-10 flex flex-col">
+
+                            <button onclick="document.getElementById('receipt-<?= $row['id_pinjam'] ?>').classList.add('hidden')"
+                                class="absolute top-3 right-3 text-white/70 hover:text-white transition cursor-pointer z-20">
+                                <i class="fa-solid fa-xmark text-lg"></i>
+                            </button>
+
+                            <div class="bg-[#1e3a8a] rounded-t-2xl w-full pt-6 pb-4 px-5 text-center">
+                                <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-[#1e3a8a] text-3xl mx-auto mb-3 shadow-sm">
+                                    <i class="fa-solid fa-receipt"></i>
+                                </div>
+                                <h3 class="font-bold text-xl text-white">Bukti Peminjaman</h3>
+                                <p class="text-blue-200 text-sm mt-1">E-Library Portal</p>
+                            </div>
+
+                            <div class="bg-white rounded-b-2xl w-full p-4">
+                                <div class="text-center mb-4">
+                                    <h4 class="font-bold text-gray-900 text-base leading-tight"><?= htmlspecialchars($row['judul']) ?></h4>
+                                    <p class="text-sm text-gray-500 mt-1"><?= htmlspecialchars($row['penulis']) ?></p>
+                                </div>
+
+                                <div class="border-t-2 border-dashed border-gray-200 my-3"></div>
+
+                                <div class="space-y-2">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-sm text-gray-500">ID Peminjaman</span>
+                                        <span class="text-sm font-bold text-gray-900">PMJ-<?= str_pad($row['id_pinjam'], 4, '0', STR_PAD_LEFT) ?></span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-sm text-gray-500">Username</span>
+                                        <span class="text-sm font-bold text-gray-900"><?= htmlspecialchars($username) ?></span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-sm text-gray-500">Tanggal Pinjam</span>
+                                        <span class="text-sm font-bold text-gray-900">
+                                            <?php echo (empty($row['tanggal_pinjam']) || $row['tanggal_pinjam'] == '-' || $row['tanggal_pinjam'] == '0000-00-00') ? '-' : date('d M Y', strtotime($row['tanggal_pinjam'])); ?>
+                                        </span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-sm text-gray-500">Batas Kembali</span>
+                                        <span class="text-sm font-bold text-[#1e3a8a]">
+                                            <?php echo (empty($row['tanggal_kembali']) || $row['tanggal_kembali'] == '-' || $row['tanggal_kembali'] == '0000-00-00') ? '-' : date('d M Y', strtotime($row['tanggal_kembali'])); ?>
+                                        </span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-sm text-gray-500">Status</span>
+                                        <?php if (strtolower($row['status']) == 'aktif'): ?>
+                                            <span class="bg-blue-100 text-[#1e3a8a] px-2.5 py-0.5 rounded border border-blue-200 text-xs font-bold">Aktif</span>
+                                        <?php elseif (strtolower($row['status']) == 'antri'): ?>
+                                            <span class="bg-yellow-100 text-yellow-700 px-2.5 py-0.5 rounded border border-yellow-200 text-xs font-bold">Antre</span>
+                                        <?php else: ?>
+                                            <span class="bg-green-100 text-green-700 px-2.5 py-0.5 rounded border border-green-200 text-xs font-bold">Dikembalikan</span>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+
+                                <div class="border-t-2 border-dashed border-gray-200 my-3"></div>
+
+                                <div class="text-center mb-4">
+                                    <div class="text-[11px] text-gray-400 mt-2 font-medium">Generated at <?= date('d M Y H:i') ?></div>
+                                </div>
+
+                                <button onclick="document.getElementById('receipt-<?= $row['id_pinjam'] ?>').classList.add('hidden')"
+                                    class="w-full bg-[#1e3a8a] text-white py-2.5 rounded-xl font-bold shadow hover:bg-blue-900 transition text-center flex items-center justify-center text-sm">
+                                    Tutup
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
                 <?php }
             } else { ?>
                 <div class="text-center py-20 text-gray-500">Tidak ada riwayat peminjaman.</div>
@@ -150,7 +258,10 @@ $result_activity = @mysqli_query($conn, $query_activity);
 
     <footer class="bg-[#f8fafc] border-t border-gray-200 py-8 mt-auto">
         <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-[11px] text-gray-500 font-medium">&copy; <?= date('Y'); ?> E-Library Portal. Knowledge-Centric & Accessible.</p>
+            <div>
+                <h4 class="text-[#1e3a8a] font-bold text-sm mb-1">E-Library Portal</h4>
+                <p class="text-[11px] text-gray-500 font-medium">&copy; <?= date('Y'); ?> Digital Library Management System</p>
+            </div>
         </div>
     </footer>
 
