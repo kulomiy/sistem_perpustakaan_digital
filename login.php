@@ -2,7 +2,7 @@
 session_start();
 require 'koneksi.php'; 
 
-if (isset($_POST['login'])) {
+if (isset($_POST['Masuk'])) {
     $username = mysqli_real_escape_string($conn, $_POST['username']);
     $password = $_POST['password']; 
 
@@ -16,7 +16,7 @@ if (isset($_POST['login'])) {
             if($data['role'] == 'admin') {
                 header("Location: admin/dashboard.php"); 
             } else {
-                header("Location: user/activity.php"); // Diarahkan ke Activity History
+                header("Location: user/beranda.php"); // Diarahkan ke Activity History
             }
             exit();
         } else {
@@ -32,7 +32,7 @@ if (isset($_POST['login'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Nexus Library</title>
+    <title>Masuk - Ruang Pustaka</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -45,19 +45,19 @@ if (isset($_POST['login'])) {
         <!-- Overlay pattern placeholder -->
         <div class="absolute inset-0 bg-black opacity-10"></div>
         <div class="relative z-10">
-            <h1 class="text-3xl font-bold text-white mb-2">Nexus Library</h1>
-            <p class="text-blue-200 text-sm">Knowledge-Centric, Precise, and Accessible.</p>
+            <h1 class="text-3xl font-bold text-white mb-2">Ruang Pustaka</h1>
+            <p class="text-blue-200 text-sm">Temukan, Baca, dan Kelola Pengetahuan dalam Satu Tempat</p>
         </div>
         <div class="relative z-10 mt-auto bg-[#002b66]/50 border border-blue-400/20 p-5 rounded-lg backdrop-blur-sm">
-            <p class="text-blue-100 text-sm italic">"A sanctuary for the mind, bridging the gap between high-utility administration and an inviting digital portal."</p>
+            <p class="text-blue-100 text-sm italic">"Ruang digital yang memudahkanmu mengakses koleksi, membaca, dan menikmati pengalaman literasi yang nyaman."</p>
         </div>
     </div>
 
     <!-- Right Panel: Login Form -->
     <div class="w-full md:w-7/12 flex items-center justify-center bg-white p-8">
         <div class="w-full max-w-md">
-            <h2 class="text-3xl font-bold text-[#003882] mb-2">Welcome Back</h2>
-            <p class="text-gray-500 text-sm mb-8">Log in to your account to start reading and manage your digital library.</p>
+            <h2 class="text-3xl font-bold text-[#003882] mb-2">Selamat Datang Kembali</h2>
+            <p class="text-gray-500 text-sm mb-8">Masuk untuk melanjutkan perjalanan literasimu bersama Ruang Pustaka.</p>
             
             <?php if(isset($error)) echo "<p class='bg-red-50 text-red-600 p-3 rounded-md text-sm mb-4 border border-red-100'><i class='fa-solid fa-circle-exclamation mr-2'></i>$error</p>"; ?>
             
@@ -72,7 +72,6 @@ if (isset($_POST['login'])) {
                <div class="mb-6">
     <div class="flex justify-between items-center mb-2">
         <label class="block text-xs font-bold text-gray-700 uppercase tracking-wide">Password</label>
-        <a href="#" class="text-[#003882] text-xs font-semibold hover:underline">Forgot Password?</a>
     </div>
     <div class="relative">
         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400"><i class="fa-solid fa-lock text-sm"></i></div>
@@ -98,14 +97,10 @@ if (isset($_POST['login'])) {
         eyeIcon.classList.toggle('fa-eye-slash');
     });
 </script>
-                <div class="flex items-center mb-6">
-                    <input type="checkbox" id="remember" class="w-4 h-4 rounded border-gray-300 text-[#003882] focus:ring-[#003882]">
-                    <label for="remember" class="ml-2 text-sm text-gray-600">Remember Me</label>
-                </div>
-                <button type="submit" name="login" class="w-full bg-[#003882] text-white py-3 rounded-md text-sm font-bold shadow-md hover:bg-blue-900 transition mb-6">Login</button>
+                <button type="submit" name="Masuk" class="w-full bg-[#003882] text-white py-3 rounded-md text-sm font-bold shadow-md hover:bg-blue-900 transition mb-6">Masuk</button>
             </form>
             
-            <p class="text-center text-sm text-gray-600">Don't have an account? <a href="register.php" class="text-[#003882] font-bold hover:underline">Register</a></p>
+            <p class="text-center text-sm text-gray-600">Belum punya akun? <a href="register.php" class="text-[#003882] font-bold hover:underline">Daftar</a></p>
         </div>
     </div>
 </body>

@@ -40,7 +40,7 @@ $result_activity = @mysqli_query($conn, $query_activity);
 
 <head>
     <meta charset="UTF-8">
-    <title>Activity History - E-Library Portal</title>
+    <title>Activity History - Ruang Pustaka</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -58,11 +58,11 @@ $result_activity = @mysqli_query($conn, $query_activity);
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center gap-2">
-                    <span class="text-[#1e3a8a] font-extrabold text-xl tracking-tight">E-Library Portal</span>
+                    <span class="text-[#1e3a8a] font-extrabold text-xl tracking-tight">Ruang Pustaka</span>
                 </div>
 
                 <div class="hidden md:flex space-x-8">
-                    <a href="beranda.php" class="border-b-2 border-transparent text-gray-500 hover:text-gray-900 hover:border-gray-300 inline-flex items-center px-1 pt-1 text-sm font-medium transition">Home</a>
+                    <a href="beranda.php" class="border-b-2 border-transparent text-gray-500 hover:text-gray-900 hover:border-gray-300 inline-flex items-center px-1 pt-1 text-sm font-medium transition">Beranda</a>
                     <a href="daftar_buku.php" class="border-b-2 border-transparent text-gray-500 hover:text-gray-900 hover:border-gray-300 inline-flex items-center px-1 pt-1 text-sm font-medium transition">Daftar Buku</a>
                     <a href="activity.php" class="border-b-2 border-[#1e3a8a] text-[#1e3a8a] inline-flex items-center px-1 pt-1 text-sm font-bold">Riwayat Buku</a>
                 </div>
@@ -97,9 +97,9 @@ $result_activity = @mysqli_query($conn, $query_activity);
     </nav>
 
     <main class="flex-1 max-w-5xl mx-auto w-full px-4 pt-4 pb-12">
-        <div class="flex justify-between items-end mb-8 border-b border-gray-100 pb-6">
+        <div class="flex justify-between items-end mb-4 border-b border-gray-100 pb-3">
             <div>
-                <h2 class="text-3xl font-extrabold text-[#0f172a] mb-2">Activity History</h2>
+                <h2 class="text-3xl font-extrabold text-[#1e3a8a] mb-2">Riwayat Pinjam</h2>
                 <p class="text-gray-500 text-sm">Monitor riwayat peminjaman buku digital Anda.</p>
             </div>
         </div>
@@ -167,19 +167,20 @@ $result_activity = @mysqli_query($conn, $query_activity);
                                 onclick="document.getElementById('receipt-<?= $row['id_pinjam'] ?>').classList.remove('hidden')"
                                 class="bg-[#1e3a8a] text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-900 transition">
                                 <i class="fa-solid fa-receipt mr-1"></i>
-                                Receipt
+                                Bukti Pinjam
                             </button>
                         </div>
                     </div>
 
                     <!-- MODAL RECEIPT -->
-                    <div id="receipt-<?= $row['id_pinjam'] ?>" class="hidden fixed inset-0 z-[9999] flex items-center justify-center p-2">
+                    <div id="receipt-<?= $row['id_pinjam'] ?>"
+     class="hidden fixed inset-0 z-[9999] flex items-center justify-center">
 
-                        <div class="absolute top-0 left-0 w-full h-full bg-black/60 backdrop-blur-sm"
-                            onclick="document.getElementById('receipt-<?= $row['id_pinjam'] ?>').classList.add('hidden')">
-                        </div>
+    <div class="fixed inset-0 bg-black/60 backdrop-blur-sm"
+        onclick="document.getElementById('receipt-<?= $row['id_pinjam'] ?>').classList.add('hidden')">
+    </div>
 
-                        <div class="w-full max-w-sm relative shadow-2xl z-10 flex flex-col">
+    <div class="relative z-10 w-full max-w-sm flex flex-col">
 
                             <button onclick="document.getElementById('receipt-<?= $row['id_pinjam'] ?>').classList.add('hidden')"
                                 class="absolute top-3 right-3 text-white/70 hover:text-white transition cursor-pointer z-20">
@@ -191,7 +192,7 @@ $result_activity = @mysqli_query($conn, $query_activity);
                                     <i class="fa-solid fa-receipt"></i>
                                 </div>
                                 <h3 class="font-bold text-xl text-white">Bukti Peminjaman</h3>
-                                <p class="text-blue-200 text-sm mt-1">E-Library Portal</p>
+                                <p class="text-blue-200 text-sm mt-1">Ruang Pustaka</p>
                             </div>
 
                             <div class="bg-white rounded-b-2xl w-full p-4">
@@ -238,7 +239,7 @@ $result_activity = @mysqli_query($conn, $query_activity);
                                 <div class="border-t-2 border-dashed border-gray-200 my-3"></div>
 
                                 <div class="text-center mb-4">
-                                    <div class="text-[11px] text-gray-400 mt-2 font-medium">Generated at <?= date('d M Y H:i') ?></div>
+                                    <div class="text-[11px] text-gray-400 mt-2 font-medium">Dibuat pada <?= date('d M Y H:i') ?></div>
                                 </div>
 
                                 <button onclick="document.getElementById('receipt-<?= $row['id_pinjam'] ?>').classList.add('hidden')"
@@ -259,8 +260,8 @@ $result_activity = @mysqli_query($conn, $query_activity);
     <footer class="bg-[#f8fafc] border-t border-gray-200 py-8 mt-auto">
         <div class="max-w-7xl mx-auto px-4 text-center">
             <div>
-                <h4 class="text-[#1e3a8a] font-bold text-sm mb-1">E-Library Portal</h4>
-                <p class="text-[11px] text-gray-500 font-medium">&copy; <?= date('Y'); ?> Digital Library Management System</p>
+                <h4 class="text-[#1e3a8a] font-bold text-sm mb-1">Ruang Pustaka</h4>
+                <p class="text-[11px] text-gray-500 font-medium">&copy; <?= date('Y'); ?> DSistem Manajemen Ruang Pustaka</p>
             </div>
         </div>
     </footer>

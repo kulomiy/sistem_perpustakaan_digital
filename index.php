@@ -17,7 +17,7 @@ if (isset($_SESSION['role'])) {
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Welcome - E-Library Portal</title>
+    <title>Welcome - Ruang Pustaka</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-blue-900 flex items-center justify-center h-screen text-white">
@@ -29,7 +29,7 @@ if (isset($_SESSION['role'])) {
             </span>
         </div>
         
-        <h1 class="text-4xl md:text-5xl font-bold mb-4">E-Library Portal</h1>
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">Ruang Pustaka</h1>
         <p class="text-lg md:text-xl text-blue-200 mb-8 max-w-lg mx-auto">
             "A sanctuary for the mind, bridging the gap between high-utility administration and an inviting digital portal."
         </p>

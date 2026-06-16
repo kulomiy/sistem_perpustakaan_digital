@@ -16,7 +16,7 @@ $result_akses = @mysqli_query($conn, $query_akses);
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Akses Aktif - E-Library Portal</title>
+    <title>Akses Aktif - Ruang Pustaka</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -31,7 +31,7 @@ $result_akses = @mysqli_query($conn, $query_akses);
             </div>
             <div>
                 <h1 class="text-[#1e3a8a] font-bold text-lg leading-none">Admin Panel</h1>
-                <p class="text-xs text-gray-500 mt-1 font-medium">E-Library Portal</p>
+                <p class="text-xs text-gray-500 mt-1 font-medium">Ruang Pustaka</p>
             </div>
         </div>
 

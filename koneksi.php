@@ -1,7 +1,7 @@
 <?php
 $host = "localhost";
 $user = "root";
-$pass = "123";
+$pass = "";
 $db   = "perpus_digital";
 
 $conn = mysqli_connect($host, $user, $pass, $db);

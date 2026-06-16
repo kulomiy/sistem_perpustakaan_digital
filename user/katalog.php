@@ -9,13 +9,13 @@ $query_buku = mysqli_query($conn, "SELECT * FROM buku LIMIT 8");
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Katalog Buku - E-Library Portal</title>
+    <title>Katalog Buku - Ruang Pustaka</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-gray-50">
     <nav class="bg-white shadow px-6 py-4 flex justify-between items-center">
-        <div class="text-xl font-bold text-blue-800">E-Library Portal</div>
+        <div class="text-xl font-bold text-blue-800">Ruang Pustaka</div>
         <div class="space-x-4">
             <a href="#" class="text-gray-600 hover:text-blue-800">Home</a>
             <a href="katalog.php" class="text-blue-800 font-medium">Daftar Buku</a>

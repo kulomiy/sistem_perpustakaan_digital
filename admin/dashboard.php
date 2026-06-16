@@ -44,7 +44,7 @@ $result_transaksi = @mysqli_query($conn, $query_transaksi);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Admin - E-Library Portal</title>
+    <title>Dashboard Admin - Ruang Pustaka</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -58,8 +58,8 @@ $result_transaksi = @mysqli_query($conn, $query_transaksi);
                 <i class="fa-solid fa-book-open text-xl"></i>
             </div>
             <div>
-                <h1 class="text-[#1e3a8a] font-bold text-lg leading-none">Admin Panel</h1>
-                <p class="text-xs text-gray-500 mt-1 font-medium">E-Library Portal</p>
+                <h1 class="text-[#1e3a8a] font-bold text-lg leading-none">Kontrol Panel</h1>
+                <p class="text-xs text-gray-500 mt-1 font-medium">Ruang Pustaka</p>
             </div>
         </div>
 
@@ -93,7 +93,7 @@ $result_transaksi = @mysqli_query($conn, $query_transaksi);
 
     <main class="ml-64 flex-1 p-8">
         <header class="mb-8">
-            <h2 class="text-2xl font-bold text-gray-900">Dashboard Overview</h2>
+            <h2 class="text-2xl font-bold text-gray-900">Dashboard</h2>
             <p class="text-gray-500 text-sm mt-1">Ringkasan aktivitas dan data perpustakaan.</p>
         </header>
 

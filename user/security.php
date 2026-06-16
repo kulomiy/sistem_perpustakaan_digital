@@ -19,7 +19,7 @@ $inisial = (count($words) >= 2) ? strtoupper(substr($words[0], 0, 1) . substr($w
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Security - Nexus Library</title>
+    <title>Security - Ruang Pustaka</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -31,7 +31,7 @@ $inisial = (count($words) >= 2) ? strtoupper(substr($words[0], 0, 1) . substr($w
         <div class="p-6 flex items-center gap-3">
             <div class="bg-[#003882] text-white p-2 rounded-lg flex items-center justify-center w-10 h-10 font-bold">NL</div>
             <div>
-                <h1 class="text-[#003882] text-lg font-bold leading-tight">Nexus Library</h1>
+                <h1 class="text-[#003882] text-lg font-bold leading-tight">Ruang Pustaka</h1>
                 <p class="text-[11px] text-gray-500 font-medium uppercase tracking-wide">Member Portal</p>
             </div>
         </div>

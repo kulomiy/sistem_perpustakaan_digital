@@ -56,7 +56,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Beranda - E-Library Portal</title>
+        <title>Beranda - Ruang Pustaka</title>
         <script src="https://cdn.tailwindcss.com"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -82,11 +82,11 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between items-center h-16">
                     <div class="flex items-center gap-2">
-                        <span class="text-[#1e3a8a] font-extrabold text-xl tracking-tight">E-Library Portal</span>
+                        <span class="text-[#1e3a8a] font-extrabold text-xl tracking-tight">Ruang Pustaka</span>
                     </div>
 
                     <div class="hidden md:flex space-x-8">
-                        <a href="beranda.php" class="border-b-2 border-[#1e3a8a] text-[#1e3a8a] inline-flex items-center px-1 pt-1 text-sm font-bold transition">Home</a>
+                        <a href="beranda.php" class="border-b-2 border-[#1e3a8a] text-[#1e3a8a] inline-flex items-center px-1 pt-1 text-sm font-bold transition">Beranda</a>
                         <a href="daftar_buku.php" class="border-b-2 border-transparent text-gray-500 hover:text-gray-900 hover:border-gray-300 inline-flex items-center px-1 pt-1 text-sm font-medium transition">Daftar Buku</a>
                         <a href="activity.php" class="border-b-2 border-transparent text-gray-500 hover:text-gray-900 hover:border-gray-300 inline-flex items-center px-1 pt-1 text-sm font-medium transition">Riwayat Buku</a>
                     </div>
@@ -129,7 +129,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
                 <div class="bg-gradient-to-br from-blue-100 via-indigo-50 to-blue-50 rounded-2xl py-16 px-4 text-center border border-blue-100">
                     <h1 class="text-4xl font-extrabold text-[#0f172a] mb-4 tracking-tight">Jelajahi Dunia Pengetahuan</h1>
-                    <p class="text-[#1e3a8a] text-sm md:text-base max-w-2xl mx-auto mb-8 font-medium">Akses ribuan koleksi buku digital, jurnal, dan literatur akademik. Temukan inspirasi dan kembangkan wawasan Anda di E-Library Portal.</p>
+                    <p class="text-[#1e3a8a] text-sm md:text-base max-w-2xl mx-auto mb-8 font-medium">Akses ribuan koleksi buku digital, jurnal, dan literatur akademik. Temukan inspirasi dan kembangkan wawasan Anda di Ruang Pustaka.</p>
 
                     <div id="area-pencarian" class="max-w-2xl mx-auto relative scroll-mt-24">
                         <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
@@ -245,8 +245,8 @@
         <footer class="bg-[#f8fafc] border-t border-gray-200 py-8 mt-auto">
             <div class="max-w-7xl mx-auto px-4 text-center">
                 <div>
-                    <h4 class="text-[#1e3a8a] font-bold text-sm mb-1">E-Library Portal</h4>
-                    <p class="text-[11px] text-gray-500 font-medium">&copy; <?= date('Y'); ?> Digital Library Management System</p>
+                    <h4 class="text-[#1e3a8a] font-bold text-sm mb-1">Ruang Pustaka</h4>
+                    <p class="text-[11px] text-gray-500 font-medium">&copy; <?= date('Y'); ?> Sistem Manajemen Ruang Pustaka</p>
                 </div>
             </div>
         </footer>
