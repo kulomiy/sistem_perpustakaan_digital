@@ -31,7 +31,7 @@ $result_riwayat = @mysqli_query($conn, $query_riwayat);
             </div>
             <div>
                 <h1 class="text-[#1e3a8a] font-bold text-lg leading-none">Admin Panel</h1>
-                <p class="text-xs text-gray-500 mt-1 font-medium">Ruang Pustaka/p>
+                <p class="text-xs text-gray-500 mt-1 font-medium">Ruang Pustaka</p>
             </div>
         </div>
 

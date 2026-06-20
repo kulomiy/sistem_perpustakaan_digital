@@ -261,7 +261,7 @@ $result_activity = @mysqli_query($conn, $query_activity);
         <div class="max-w-7xl mx-auto px-4 text-center">
             <div>
                 <h4 class="text-[#1e3a8a] font-bold text-sm mb-1">Ruang Pustaka</h4>
-                <p class="text-[11px] text-gray-500 font-medium">&copy; <?= date('Y'); ?> DSistem Manajemen Ruang Pustaka</p>
+                <p class="text-[11px] text-gray-500 font-medium">&copy; <?= date('Y'); ?> Sistem Manajemen Ruang Pustaka</p>
             </div>
         </div>
     </footer>

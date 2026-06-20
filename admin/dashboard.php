@@ -3,8 +3,13 @@ session_start();
 require '../koneksi.php'; 
 
 // Mengambil jumlah total buku dan anggota
-$total_buku = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM buku"));
-$total_anggota = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM users WHERE role='member'"));
+// Mengambil jumlah total buku menggunakan fungsi agregat COUNT
+$q_buku = mysqli_query($conn, "SELECT COUNT(*) as total FROM buku");
+$total_buku = mysqli_fetch_assoc($q_buku)['total'];
+
+// Mengambil jumlah total anggota menggunakan fungsi agregat COUNT
+$q_anggota = mysqli_query($conn, "SELECT COUNT(*) as total FROM users WHERE role='member'");
+$total_anggota = mysqli_fetch_assoc($q_anggota)['total'];
 
 // Menghitung Akses Aktif & Berakhir
 $total_aktif = 0;
