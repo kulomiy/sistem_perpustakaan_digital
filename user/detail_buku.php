@@ -42,8 +42,7 @@ if (!$buku) {
     exit();
 }
 
-// 1. Cek secara spesifik: Apakah user sudah meminjam BUKU INI?
-// Ubah kueri $cek_status_user menjadi:
+// 1. Cek secara spesifik: Apakah user sudah meminjam BUKU INI
 $cek_status_user = mysqli_query($conn, "
     SELECT status
     FROM peminjaman
@@ -80,7 +79,7 @@ if ($sudah_pinjam_ini) {
         $modal_info_bg = "bg-blue-50/50 border-blue-100";
         $modal_info_text = "Akses akan terkunci otomatis saat masa pinjam telah selesai.";
     } else {
-        $status_badge = '<span class="bg-red-100 text-red-600 px-3 py-1 rounded-full text-xs font-bold tracking-wide border border-red-200"><i class="fa-solid fa-circle-xmark mr-1"></i> Stok Kosong</span>';
+        $status_badge = '<span class="bg-red-100 text-red-600 px-3 py-1 rounded-full text-xs font-bold tracking-wide border border-red-200"><i class="fa-solid fa-circle-xmark mr-1"></i> Copy Kosong</span>';
         $btn_pinjam = '<label for="modal-toggle" class="w-full bg-yellow-500 text-white py-3 rounded-xl font-bold shadow hover:bg-yellow-600 transition flex justify-center items-center gap-2 cursor-pointer"><i class="fa-solid fa-users"></i> Antri Buku Ini</label>';
 
         $modal_title = "Konfirmasi Antrean";
@@ -89,7 +88,7 @@ if ($sudah_pinjam_ini) {
         $tgl_kembali_tampil = "Akan Diinformasikan";
         $modal_info_icon = "fa-triangle-exclamation text-yellow-600";
         $modal_info_bg = "bg-yellow-50 border-yellow-100";
-        $modal_info_text = "Stok saat ini kosong. Anda akan dimasukkan ke sistem antrean dan mendapatkan akses setelah buku dikembalikan oleh pengguna lain.";
+        $modal_info_text = "Copy saat ini tidak tersedia. Anda akan dimasukkan ke sistem antrean dan mendapatkan akses setelah buku dikembalikan oleh pengguna lain.";
     }
 }
 
@@ -131,7 +130,6 @@ $text_cover = ($bg_cover == 'from-slate-100 to-slate-300') ? 'text-gray-800' : '
                 </div>
 
                 <div class="flex items-center gap-5 text-gray-500 relative">
-                    <a href="beranda.php#area-pencarian" class="hover:text-gray-900 transition mt-1"><i class="fa-solid fa-magnifying-glass text-lg"></i></a>
                     <button id="profile-btn" class="w-9 h-9 rounded-full bg-gradient-to-br from-[#c900ff] to-[#8000ff] text-white font-medium text-sm flex items-center justify-center shadow-sm cursor-pointer hover:ring-2 hover:ring-purple-300 transition focus:outline-none">
                         <?= $inisial ?>
                     </button>
@@ -152,10 +150,10 @@ $text_cover = ($bg_cover == 'from-slate-100 to-slate-300') ? 'text-gray-800' : '
 
                         <div class="p-2 bg-white flex flex-col">
                             <a href="security.php" class="px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:text-[#263b96] transition rounded-lg flex items-center gap-3">
-                                <i class="fa-solid fa-lock text-gray-400 w-4 text-center"></i> Change Password
+                                <i class="fa-solid fa-lock text-gray-400 w-4 text-center"></i> Ganti Password
                             </a>
                             <a href="../login.php" class="px-4 py-3 text-sm font-semibold text-red-600 hover:bg-red-50 transition rounded-lg flex items-center gap-3">
-                                <i class="fa-solid fa-arrow-right-from-bracket text-red-400 w-4 text-center"></i> Log Out
+                                <i class="fa-solid fa-arrow-right-from-bracket text-red-400 w-4 text-center"></i> Keluar
                             </a>
                         </div>
                     </div>
@@ -246,8 +244,8 @@ $text_cover = ($bg_cover == 'from-slate-100 to-slate-300') ? 'text-gray-800' : '
                         <p class="text-sm text-gray-900 font-semibold"><?= htmlspecialchars($buku['nama_kategori'] ?? '-') ?></p>
                     </div>
                     <div>
-                        <p class="text-xs text-gray-400 font-bold uppercase tracking-wider mb-1">Stok Fisik/Digital</p>
-                        <p class="text-sm text-gray-900 font-semibold"><?= htmlspecialchars($buku['stok']) ?> Eksemplar</p>
+                        <p class="text-xs text-gray-400 font-bold uppercase tracking-wider mb-1">Copy Tersedia</p>
+                        <p class="text-sm text-gray-900 font-semibold"><?= htmlspecialchars($buku['stok']) ?> Copy</p>
                     </div>
                 </div>
 
@@ -309,7 +307,7 @@ $text_cover = ($bg_cover == 'from-slate-100 to-slate-300') ? 'text-gray-800' : '
                         <span class="text-sm font-bold text-gray-900"><?= $durasi_teks ?></span>
                     </div>
                     <div class="flex justify-between items-center">
-                        <span class="text-sm text-gray-500 font-medium">Status Pengembalian</span>
+                        <span class="text-sm text-gray-500 font-medium">Akses Berakhir</span>
                         <span class="text-sm font-bold text-[#1e3a8a]"><?= $tgl_kembali_tampil ?></span>
                     </div>
                 </div>
@@ -342,7 +340,7 @@ $text_cover = ($bg_cover == 'from-slate-100 to-slate-300') ? 'text-gray-800' : '
         $bg_icon_sukses = $is_antri ? "bg-yellow-50 ring-yellow-100" : "bg-blue-50 ring-blue-100";
         $pesan_sukses = $is_antri
             ? "Anda telah ditambahkan ke daftar antrean untuk buku <strong>" . htmlspecialchars($buku['judul']) . "</strong>. Kami akan memberi tahu Anda jika buku sudah tersedia."
-            : "Buku <strong>" . htmlspecialchars($buku['judul']) . "</strong> telah berhasil dipesan. Silakan akses di portal riwayat Anda sebelum masa peminjaman habis.";
+            : "Buku <strong>" . htmlspecialchars($buku['judul']) . "</strong> telah berhasil dipinjam. Silakan akses di portal riwayat Anda sebelum masa peminjaman habis.";
         ?>
         <div class="fixed inset-0 z-[60] flex items-center justify-center p-4">
             <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
@@ -357,7 +355,7 @@ $text_cover = ($bg_cover == 'from-slate-100 to-slate-300') ? 'text-gray-800' : '
                 </p>
 
                 <div class="flex flex-col gap-3">
-                    <a href="activity.php" class="block w-full bg-[#1e3a8a] text-white py-3 rounded-xl font-bold shadow hover:bg-blue-900 transition text-sm">Lihat Riwayat Booking</a>
+                    <a href="activity.php" class="block w-full bg-[#1e3a8a] text-white py-3 rounded-xl font-bold shadow hover:bg-blue-900 transition text-sm">Lihat Riwayat Pinjam</a>
                     <a href="detail_buku.php?id=<?= $buku['id_buku'] ?>" class="block w-full bg-white border border-gray-300 text-gray-700 py-3 rounded-xl font-bold hover:bg-gray-50 transition text-sm">Tutup</a>
                 </div>
             </div>

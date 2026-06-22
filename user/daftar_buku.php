@@ -110,10 +110,10 @@ $search_only_param = !empty($search) ? '?search=' . urlencode($search) : '';
 
                         <div class="p-2 bg-white flex flex-col">
                             <a href="security.php" class="px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:text-[#263b96] transition rounded-lg flex items-center gap-3">
-                                <i class="fa-solid fa-lock text-gray-400 w-4 text-center"></i> Change Password
+                                <i class="fa-solid fa-lock text-gray-400 w-4 text-center"></i> Ganti Password
                             </a>
                             <a href="../login.php" class="px-4 py-3 text-sm font-semibold text-red-600 hover:bg-red-50 transition rounded-lg flex items-center gap-3">
-                                <i class="fa-solid fa-arrow-right-from-bracket text-red-400 w-4 text-center"></i> Log Out
+                                <i class="fa-solid fa-arrow-right-from-bracket text-red-400 w-4 text-center"></i> Keluar
                             </a>
                         </div>
                     </div>
@@ -124,7 +124,7 @@ $search_only_param = !empty($search) ? '?search=' . urlencode($search) : '';
 
     <main class="flex-1">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
-                <div class="bg-gradient-to-br from-blue-100 via-indigo-50 to-blue-50 rounded-2xl py-16 px-4 text-center border border-blue-100">
+            <div class="bg-gradient-to-br from-blue-100 via-indigo-50 to-blue-50 rounded-2xl py-16 px-4 text-center border border-blue-100">
                 <h1 class="text-4xl font-extrabold text-[#0f172a] mb-3">Daftar Koleksi Buku</h1>
                 <p class="text-[#1e3a8a] text-sm md:text-base max-w-2xl mx-auto font-medium">Jelajahi seluruh koleksi literatur kami. Gunakan filter kategori untuk menemukan buku yang paling sesuai dengan minat Anda.</p>
             </div>

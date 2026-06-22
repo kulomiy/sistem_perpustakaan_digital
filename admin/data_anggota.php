@@ -42,7 +42,7 @@ $result = mysqli_query($conn, $query);
                 <p class="px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Transaksi</p>
             </div>
             <a href="akses_buku.php" class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-blue-50 hover:text-[#1e3a8a] rounded-xl font-medium transition">
-                <i class="fa-solid fa-key w-5"></i> Akses Aktif
+                <i class="fa-solid fa-key w-5"></i> Akses Pinjam
             </a>
             <a href="riwayat_akses.php" class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-blue-50 hover:text-[#1e3a8a] rounded-xl font-medium transition">
                 <i class="fa-solid fa-clock-rotate-left w-5"></i> Riwayat
@@ -58,12 +58,12 @@ $result = mysqli_query($conn, $query);
     <main class="ml-64 flex-1 p-8">
         <div class="mb-8">
             <h2 class="text-2xl font-bold text-gray-900">Data Anggota</h2>
-            <p class="text-gray-500 text-sm mt-1">Daftar pengguna yang terdaftar di Ruang Pustaka.</p>
+            <p class="text-gray-500 text-sm mt-1">Daftar pengguna yang terdaftar di Ruang Pustaka</p>
         </div>
 
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
             <div class="px-6 py-5 border-b border-gray-100 bg-gray-50/50">
-                <h3 class="font-bold text-gray-800">Daftar Member</h3>
+                <h3 class="font-bold text-gray-800">Daftar Anggota</h3>
             </div>
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse">
@@ -102,7 +102,7 @@ $result = mysqli_query($conn, $query);
                                     </td>
                                 </tr>
                         <?php } } else { ?>
-                            <tr><td colspan="4" class="px-6 py-12 text-center text-gray-500">Belum ada data anggota.</td></tr>
+                            <tr><td colspan="4" class="px-6 py-12 text-center text-gray-500">Belum ada data anggota</td></tr>
                         <?php } ?>
                     </tbody>
                 </table>

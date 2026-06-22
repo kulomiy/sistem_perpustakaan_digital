@@ -79,7 +79,7 @@ if (isset($_POST['update'])) {
                 <p class="px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Transaksi</p>
             </div>
             <a href="akses_buku.php" class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-blue-50 hover:text-[#1e3a8a] rounded-xl font-medium transition">
-                <i class="fa-solid fa-key w-5"></i> Akses Aktif
+                <i class="fa-solid fa-key w-5"></i> Akses Pinjam
             </a>
             <a href="riwayat_akses.php" class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-blue-50 hover:text-[#1e3a8a] rounded-xl font-medium transition">
                 <i class="fa-solid fa-clock-rotate-left w-5"></i> Riwayat

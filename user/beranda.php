@@ -112,10 +112,10 @@
 
                             <div class="p-2 bg-white flex flex-col">
                                 <a href="security.php" class="px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:text-[#263b96] transition rounded-lg flex items-center gap-3">
-                                    <i class="fa-solid fa-lock text-gray-400 w-4 text-center"></i> Change Password
+                                    <i class="fa-solid fa-lock text-gray-400 w-4 text-center"></i> Ganti Password
                                 </a>
                                 <a href="../login.php" class="px-4 py-3 text-sm font-semibold text-red-600 hover:bg-red-50 transition rounded-lg flex items-center gap-3">
-                                    <i class="fa-solid fa-arrow-right-from-bracket text-red-400 w-4 text-center"></i> Log Out
+                                    <i class="fa-solid fa-arrow-right-from-bracket text-red-400 w-4 text-center"></i> Keluar
                                 </a>
                             </div>
                         </div>

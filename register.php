@@ -8,7 +8,6 @@ if(isset($_POST['register'])) {
     $confirm  = $_POST['confirm_password'];
     
     if($password == $confirm) {
-        // Cek apakah username sudah ada
         $cek = mysqli_query($conn, "SELECT username FROM users WHERE username='$username'");
         if(mysqli_num_rows($cek) == 0) {
             $insert = mysqli_query($conn, "INSERT INTO users (username, password, role) VALUES ('$username', '$password', 'member')");

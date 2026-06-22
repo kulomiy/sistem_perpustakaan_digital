@@ -58,7 +58,7 @@ $kategori_query = mysqli_query($conn, "SELECT * FROM kategori");
                 <p class="px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Transaksi</p>
             </div>
             <a href="akses_buku.php" class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-blue-50 hover:text-[#1e3a8a] rounded-xl font-medium transition">
-                <i class="fa-solid fa-key w-5"></i> Akses Aktif
+                <i class="fa-solid fa-key w-5"></i> Akses Pinjam
             </a>
             <a href="riwayat_akses.php" class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-blue-50 hover:text-[#1e3a8a] rounded-xl font-medium transition">
                 <i class="fa-solid fa-clock-rotate-left w-5"></i> Riwayat
@@ -75,7 +75,7 @@ $kategori_query = mysqli_query($conn, "SELECT * FROM kategori");
         <div class="flex justify-between items-center mb-8">
             <div>
                 <h2 class="text-2xl font-bold text-gray-900">Manajemen Buku</h2>
-                <p class="text-gray-500 text-sm mt-1">Kelola data koleksi buku perpustakaan.</p>
+                <p class="text-gray-500 text-sm mt-1">Kelola data koleksi buku perpustakaan</p>
             </div>
             <a href="tambah_buku.php" class="bg-[#1e3a8a] text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-md hover:bg-blue-900 transition flex items-center gap-2">
                 <i class="fa-solid fa-plus"></i> Tambah Buku
@@ -111,7 +111,7 @@ $kategori_query = mysqli_query($conn, "SELECT * FROM kategori");
                             <th class="px-6 py-4 font-semibold uppercase tracking-wider w-16 text-center">No</th>
                             <th class="px-6 py-4 font-semibold uppercase tracking-wider">Detail Buku</th>
                             <th class="px-6 py-4 font-semibold uppercase tracking-wider">Kategori</th>
-                            <th class="px-6 py-4 font-semibold uppercase tracking-wider">Stok</th>
+                            <th class="px-6 py-4 font-semibold uppercase tracking-wider">Copy</th>
                             <th class="px-6 py-4 font-semibold uppercase tracking-wider text-right">Aksi</th>
                         </tr>
                     </thead>
@@ -154,7 +154,7 @@ $kategori_query = mysqli_query($conn, "SELECT * FROM kategori");
                                     </td>
                                 </tr>
                         <?php } } else { ?>
-                            <tr><td colspan="5" class="px-6 py-12 text-center text-gray-500">Buku tidak ditemukan.</td></tr>
+                            <tr><td colspan="5" class="px-6 py-12 text-center text-gray-500">Buku tidak ditemukan</td></tr>
                         <?php } ?>
                     </tbody>
                 </table>

@@ -174,13 +174,13 @@ $result_activity = @mysqli_query($conn, $query_activity);
 
                     <!-- MODAL RECEIPT -->
                     <div id="receipt-<?= $row['id_pinjam'] ?>"
-     class="hidden fixed inset-0 z-[9999] flex items-center justify-center">
+                        class="hidden fixed inset-0 z-[9999] flex items-center justify-center">
 
-    <div class="fixed inset-0 bg-black/60 backdrop-blur-sm"
-        onclick="document.getElementById('receipt-<?= $row['id_pinjam'] ?>').classList.add('hidden')">
-    </div>
+                        <div class="fixed inset-0 bg-black/60 backdrop-blur-sm"
+                            onclick="document.getElementById('receipt-<?= $row['id_pinjam'] ?>').classList.add('hidden')">
+                        </div>
 
-    <div class="relative z-10 w-full max-w-sm flex flex-col">
+                        <div class="relative z-10 w-full max-w-sm flex flex-col">
 
                             <button onclick="document.getElementById('receipt-<?= $row['id_pinjam'] ?>').classList.add('hidden')"
                                 class="absolute top-3 right-3 text-white/70 hover:text-white transition cursor-pointer z-20">
@@ -219,7 +219,7 @@ $result_activity = @mysqli_query($conn, $query_activity);
                                         </span>
                                     </div>
                                     <div class="flex justify-between items-center">
-                                        <span class="text-sm text-gray-500">Batas Kembali</span>
+                                        <span class="text-sm text-gray-500">Batas Pinjam</span>
                                         <span class="text-sm font-bold text-[#1e3a8a]">
                                             <?php echo (empty($row['tanggal_kembali']) || $row['tanggal_kembali'] == '-' || $row['tanggal_kembali'] == '0000-00-00') ? '-' : date('d M Y', strtotime($row['tanggal_kembali'])); ?>
                                         </span>

@@ -82,7 +82,7 @@ $result_transaksi = @mysqli_query($conn, $query_transaksi);
                 <p class="px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Transaksi</p>
             </div>
             <a href="akses_buku.php" class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-blue-50 hover:text-[#1e3a8a] rounded-xl font-medium transition">
-                <i class="fa-solid fa-key w-5"></i> Akses Aktif
+                <i class="fa-solid fa-key w-5"></i> Akses Pinjam
             </a>
             <a href="riwayat_akses.php" class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-blue-50 hover:text-[#1e3a8a] rounded-xl font-medium transition">
                 <i class="fa-solid fa-clock-rotate-left w-5"></i> Riwayat
@@ -161,7 +161,7 @@ $result_transaksi = @mysqli_query($conn, $query_transaksi);
                             <th class="px-6 py-4 font-semibold uppercase tracking-wider">Username</th>
                             <th class="px-6 py-4 font-semibold uppercase tracking-wider">Buku</th>
                             <th class="px-6 py-4 font-semibold uppercase tracking-wider">Tgl Pinjam</th>
-                            <th class="px-6 py-4 font-semibold uppercase tracking-wider">Tgl Berakhir</th>
+                            <th class="px-6 py-4 font-semibold uppercase tracking-wider">Batas Pinjam</th>
                             <th class="px-6 py-4 font-semibold uppercase tracking-wider">Status</th>
                         </tr>
                     </thead>

@@ -16,7 +16,7 @@ if (isset($_POST['Masuk'])) {
             if($data['role'] == 'admin') {
                 header("Location: admin/dashboard.php"); 
             } else {
-                header("Location: user/beranda.php"); // Diarahkan ke Activity History
+                header("Location: user/beranda.php"); 
             }
             exit();
         } else {

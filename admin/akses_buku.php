@@ -49,7 +49,7 @@ $result_akses = @mysqli_query($conn, $query_akses);
                 <p class="px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Transaksi</p>
             </div>
             <a href="akses_buku.php" class="flex items-center gap-3 px-4 py-3 bg-[#1e3a8a] text-white rounded-xl font-semibold shadow-sm">
-                <i class="fa-solid fa-key w-5"></i> Akses Aktif
+                <i class="fa-solid fa-key w-5"></i> Akses Pinjam
             </a>
             <a href="riwayat_akses.php" class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-blue-50 hover:text-[#1e3a8a] rounded-xl font-medium transition">
                 <i class="fa-solid fa-clock-rotate-left w-5"></i> Riwayat
@@ -65,8 +65,8 @@ $result_akses = @mysqli_query($conn, $query_akses);
 
     <main class="ml-64 flex-1 p-8">
         <div class="mb-8">
-            <h2 class="text-2xl font-bold text-gray-900">Akses Buku Aktif</h2>
-            <p class="text-gray-500 text-sm mt-1">Daftar buku yang sedang dipinjam atau dalam status antre.</p>
+            <h2 class="text-2xl font-bold text-gray-900">Akses Peminjaman Aktif</h2>
+            <p class="text-gray-500 text-sm mt-1">Daftar buku yang sedang dipinjam atau dalam status antre</p>
         </div>
 
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
@@ -81,7 +81,7 @@ $result_akses = @mysqli_query($conn, $query_akses);
                             <th class="px-6 py-4 font-semibold uppercase tracking-wider">ID Peminjaman</th>
                             <th class="px-6 py-4 font-semibold uppercase tracking-wider">Username</th>
                             <th class="px-6 py-4 font-semibold uppercase tracking-wider">Buku</th>
-                            <th class="px-6 py-4 font-semibold uppercase tracking-wider">Tenggat Waktu</th>
+                            <th class="px-6 py-4 font-semibold uppercase tracking-wider">Batas Pinjam</th>
                             <th class="px-6 py-4 font-semibold uppercase tracking-wider text-right">Aksi</th>
                         </tr>
                     </thead>
@@ -119,7 +119,7 @@ $result_akses = @mysqli_query($conn, $query_akses);
                             </td>
                         </tr>
                         <?php } } else { ?>
-                            <tr><td colspan="6" class="px-6 py-12 text-center text-gray-500">Saat ini tidak ada akses buku yang aktif.</td></tr>
+                            <tr><td colspan="6" class="px-6 py-12 text-center text-gray-500">Saat ini tidak ada peminjaman buku yang aktif</td></tr>
                         <?php } ?>
                     </tbody>
                 </table>
